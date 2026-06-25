@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Πόσο πλούσια είναι τα ελληνικά σου;</title>
+    <style>
+        :root {
+            --ink: #172238;
+            --paper: #f6ead6;
+            --paper-2: #fff8eb;
+            --accent: #9b2d22;
+            --accent-2: #0f4c5c;
+            --gold: #d4a847;
+            --green: #276749;
+            --red: #a13b36;
+            --shadow: 0 28px 65px rgba(23, 34, 56, 0.28);
+            --timer-percent: 100%;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--ink);
+            font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(212, 168, 71, .22), transparent 28%),
+                radial-gradient(circle at 88% 20%, rgba(15, 76, 92, .18), transparent 25%),
+                linear-gradient(135deg, #eee1c7 0%, #f8f1e7 42%, #d9c9aa 100%);
+            overflow-x: hidden;
+            padding: 30px 18px 88px;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .32;
+            background-image:
+                linear-gradient(90deg, rgba(23,34,56,.05) 1px, transparent 1px),
+                linear-gradient(0deg, rgba(23,34,56,.04) 1px, transparent 1px);
+            background-size: 34px 34px;
+            mix-blend-mode: multiply;
+        }
+
+        body::after {
+            content: "ΝΕΟΕΛΛΗΝΙΚΗ ΓΛΩΣΣΑ • Γ΄ ΓΥΜΝΑΣΙΟΥ • ΛΕΞΙΛΟΓΙΟ • ΚΟΙΝΩΝΙΑ • ΠΟΛΙΤΙΣΜΟΣ";
+            position: fixed;
+            left: -80px;
+            bottom: 68px;
+            font-family: Georgia, serif;
+            font-size: clamp(42px, 8vw, 105px);
+            font-weight: 900;
+            letter-spacing: .08em;
+            color: rgba(23, 34, 56, .055);
+            transform: rotate(-7deg);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .logo-pin {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 20;
+            width: clamp(72px, 11vw, 116px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            padding: 5px;
+            background: rgba(255,248,235,.88);
+            border: 2px solid rgba(23,34,56,.18);
+            box-shadow: 0 14px 30px rgba(23,34,56,.22);
+            transform: rotate(3deg);
+        }
+
+        .logo-pin img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        .app {
+            width: min(1080px, 100%);
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .masthead {
+            position: relative;
+            padding: 18px 130px 18px 0;
+            margin-bottom: 22px;
+        }
+
+        .kicker {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff7e8;
+            padding: 8px 14px;
+            font-size: .78rem;
+            font-weight: 900;
+            letter-spacing: .13em;
+            transform: rotate(-1.2deg);
+            box-shadow: 7px 7px 0 rgba(15,76,92,.18);
+        }
+
+        h1 {
+            margin: 16px 0 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(2.4rem, 6vw, 5.8rem);
+            line-height: .9;
+            letter-spacing: -.05em;
+            color: var(--ink);
+            text-transform: none;
+        }
+
+        .masthead-subtitle {
+            margin: 0;
+            max-width: 760px;
+            color: rgba(23,34,56,.78);
+            font-size: clamp(.9rem, 1.6vw, 1.1rem);
+            font-weight: 800;
+            letter-spacing: .01em;
+            line-height: 1.45;
+        }
+
+        .game-frame {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 280px;
+            gap: 22px;
+            align-items: stretch;
+        }
+
+        .collage-card, .side-panel {
+            position: relative;
+            background: linear-gradient(160deg, rgba(255,248,235,.97), rgba(246,234,214,.95));
+            border: 2px solid rgba(23,34,56,.18);
+            box-shadow: var(--shadow);
+        }
+
+        .collage-card {
+            min-height: 610px;
+            padding: clamp(22px, 4vw, 42px);
+            border-radius: 34px 18px 38px 24px;
+            overflow: hidden;
+        }
+
+        .collage-card::before {
+            content: "";
+            position: absolute;
+            inset: 17px;
+            border: 2px dashed rgba(155,45,34,.35);
+            border-radius: 28px 14px 31px 20px;
+            pointer-events: none;
+        }
+
+        .collage-card::after {
+            content: "";
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 124px;
+            height: 28px;
+            background: rgba(212,168,71,.45);
+            transform: translateX(-50%) rotate(-2deg);
+            box-shadow: 0 1px 0 rgba(23,34,56,.18);
+            opacity: .78;
+        }
+
+        .paper-scrap {
+            position: absolute;
+            inset: auto auto 28px -22px;
+            width: 190px;
+            height: 96px;
+            background: rgba(15,76,92,.13);
+            transform: rotate(8deg);
+            clip-path: polygon(0 12%, 100% 0, 92% 92%, 8% 100%);
+        }
+
+        .start-screen,
+        #game-area,
+        #end-screen {
+            position: relative;
+            z-index: 2;
+        }
+
+        .start-screen {
+            display: grid;
+            min-height: 460px;
+            place-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .start-box {
+            max-width: 680px;
+        }
+
+        .stamp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 112px;
+            height: 112px;
+            margin-bottom: 24px;
+            border-radius: 50%;
+            border: 4px double var(--accent);
+            color: var(--accent);
+            font-family: Georgia, serif;
+            font-weight: 900;
+            transform: rotate(-9deg);
+            background: rgba(255,255,255,.42);
+        }
+
+        .start-title {
+            font-family: Georgia, serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            line-height: 1;
+            margin: 0 0 14px;
+        }
+
+        .start-copy {
+            margin: 0 auto 26px;
+            max-width: 620px;
+            color: rgba(23,34,56,.76);
+            line-height: 1.65;
+            font-size: 1.08rem;
+        }
+
+        .top-strip {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 900;
+            font-size: .82rem;
+            letter-spacing: .04em;
+            color: #fff8eb;
+            background: var(--accent-2);
+            box-shadow: 4px 4px 0 rgba(23,34,56,.13);
+        }
+
+        .badge.alt { background: var(--accent); }
+
+        .timer {
+            width: 96px;
+            height: 96px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent) var(--timer-percent), rgba(23,34,56,.12) 0);
+            box-shadow: inset 0 0 0 8px rgba(255,248,235,.88), 0 12px 24px rgba(23,34,56,.18);
+        }
+
+        .timer-inner {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--paper-2);
+            display: grid;
+            place-items: center;
+            font-size: 1.8rem;
+            font-family: Georgia, serif;
+            font-weight: 900;
+            color: var(--accent);
+        }
+
+        .definition-card {
+            position: relative;
+            margin: 18px 0 24px;
+            padding: clamp(22px, 4vw, 34px);
+            background: #fff8eb;
+            border-left: 12px solid var(--gold);
+            box-shadow: 11px 11px 0 rgba(15,76,92,.1);
+            transform: rotate(-.45deg);
+        }
+
+        .definition-card::before {
+            content: "ΟΡΙΣΜΟΣ";
+            position: absolute;
+            right: 20px;
+            top: -13px;
+            padding: 5px 10px;
+            background: var(--ink);
+            color: #fff8eb;
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .16em;
+            transform: rotate(2deg);
+        }
+
+        .definition {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.35rem, 3.3vw, 2.2rem);
+            line-height: 1.32;
+            font-weight: 700;
+        }
+
+        .hint-display {
+            min-height: 56px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0;
+            font-size: clamp(1.5rem, 4vw, 2.45rem);
+            letter-spacing: .13em;
+            font-family: Georgia, serif;
+            font-weight: 900;
+            color: var(--accent-2);
+            word-break: break-word;
+        }
+
+        .answer-zone {
+            display: grid;
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 17px 18px;
+            border: 2px solid rgba(23,34,56,.22);
+            border-radius: 18px;
+            background: rgba(255,255,255,.75);
+            color: var(--ink);
+            text-align: center;
+            font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+            font-weight: 900;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            outline: none;
+            box-shadow: inset 0 2px 0 rgba(23,34,56,.06);
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent-2);
+            box-shadow: 0 0 0 5px rgba(15,76,92,.12);
+        }
+
+        .buttons-row {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        button {
+            border: 0;
+            padding: 14px 14px;
+            border-radius: 16px;
+            color: #fffaf0;
+            font-weight: 900;
+            font-size: .95rem;
+            cursor: pointer;
+            box-shadow: 0 9px 0 rgba(23,34,56,.18);
+            transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+        }
+
+        button:hover { filter: brightness(1.04); transform: translateY(-1px); }
+        button:active { transform: translateY(5px); box-shadow: 0 4px 0 rgba(23,34,56,.2); }
+        button:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+        .btn-start,
+        .btn-submit { background: var(--green); }
+        .btn-hint { background: var(--gold); color: var(--ink); }
+        .btn-teacher { background: var(--accent-2); }
+        .btn-pass { background: #6f5b3f; }
+        .btn-save { background: var(--ink); width: 100%; margin-top: 14px; }
+        .btn-reset { background: var(--accent); }
+
+        .feedback {
+            min-height: 36px;
+            margin-top: 10px;
+            font-size: 1.08rem;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .correct-text { color: var(--green); }
+        .wrong-text { color: var(--red); }
+        .neutral-text { color: var(--accent-2); }
+
+        .side-panel {
+            border-radius: 18px 32px 22px 28px;
+            padding: 24px;
+            overflow: hidden;
+        }
+
+        .side-panel::before {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border: 1px solid rgba(23,34,56,.13);
+            border-radius: 16px 26px 18px 24px;
+            pointer-events: none;
+        }
+
+        .score-card {
+            position: relative;
+            z-index: 2;
+            background: var(--ink);
+            color: #fff8eb;
+            padding: 24px;
+            border-radius: 18px;
+            transform: rotate(1.5deg);
+            box-shadow: 8px 8px 0 rgba(155,45,34,.18);
+        }
+
+        .score-label {
+            font-size: .75rem;
+            letter-spacing: .18em;
+            font-weight: 900;
+            opacity: .76;
+        }
+
+        .score-value {
+            font-family: Georgia, serif;
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-top: 6px;
+        }
+
+        .mini-collage {
+            position: relative;
+            z-index: 2;
+            margin-top: 24px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .clip {
+            display: inline-block;
+            width: fit-content;
+            padding: 8px 12px;
+            background: #fff8eb;
+            border: 1px solid rgba(23,34,56,.12);
+            font-family: Georgia, serif;
+            font-weight: 900;
+            box-shadow: 4px 4px 0 rgba(23,34,56,.08);
+        }
+        .clip:nth-child(1) { transform: rotate(-3deg); color: var(--accent); }
+        .clip:nth-child(2) { transform: rotate(2deg); justify-self: end; color: var(--accent-2); }
+        .clip:nth-child(3) { transform: rotate(-1deg); color: var(--green); }
+
+        .hidden { display: none !important; }
+
+        #end-screen {
+            min-height: 480px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+        }
+
+        .end-box { max-width: 620px; }
+        .final-score {
+            font-family: Georgia, serif;
+            font-size: clamp(2.2rem, 6vw, 4.4rem);
+            margin: 14px 0 24px;
+            color: var(--green);
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 18;
+            background: rgba(23, 34, 56, .96);
+            color: #fff8eb;
+            text-align: center;
+            padding: 15px 12px;
+            font-size: 13px;
+            letter-spacing: .02em;
+            box-shadow: 0 -10px 28px rgba(23,34,56,.18);
+        }
+
+
+
+        body {
+            font-size: 13px;
+            padding: 22px 14px 74px;
+        }
+
+        .logo-pin {
+            width: clamp(54px, 8vw, 82px);
+            top: 12px;
+            right: 12px;
+            padding: 4px;
+        }
+
+        .masthead {
+            padding: 12px 96px 12px 0;
+            margin-bottom: 14px;
+        }
+
+        .kicker {
+            padding: 5px 10px;
+            font-size: .58rem;
+            letter-spacing: .11em;
+        }
+
+        h1 {
+            margin: 10px 0 6px;
+            font-size: clamp(1.35rem, 3.4vw, 2.45rem);
+            line-height: .98;
+        }
+
+        .game-frame {
+            grid-template-columns: minmax(0, 1fr) 210px;
+            gap: 14px;
+        }
+
+        .collage-card {
+            min-height: 470px;
+            padding: clamp(16px, 2.4vw, 26px);
+            border-radius: 26px 15px 30px 18px;
+        }
+
+        .start-screen {
+            min-height: 350px;
+            padding: 12px;
+        }
+
+        .stamp {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 14px;
+            font-size: .78rem;
+        }
+
+        .start-title {
+            font-size: clamp(1.15rem, 2.7vw, 2.05rem);
+            line-height: 1.05;
+            margin-bottom: 10px;
+        }
+
+        .start-copy {
+            max-width: 540px;
+            font-size: .82rem;
+            line-height: 1.45;
+            margin-bottom: 18px;
+        }
+
+        .top-strip {
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .badge {
+            padding: 5px 8px;
+            font-size: .62rem;
+        }
+
+        .timer {
+            width: 70px;
+            height: 70px;
+            box-shadow: inset 0 0 0 6px rgba(255,248,235,.88), 0 9px 18px rgba(23,34,56,.16);
+        }
+
+        .timer-inner {
+            width: 50px;
+            height: 50px;
+            font-size: 1.18rem;
+        }
+
+        .definition-card {
+            margin: 12px 0 16px;
+            padding: clamp(14px, 2.2vw, 22px);
+            border-left-width: 8px;
+        }
+
+        .definition-card::before {
+            right: 14px;
+            top: -10px;
+            padding: 3px 7px;
+            font-size: .52rem;
+            letter-spacing: .14em;
+        }
+
+        .definition {
+            font-size: clamp(.92rem, 1.9vw, 1.22rem);
+            line-height: 1.28;
+        }
+
+        .hint-display {
+            min-height: 40px;
+            gap: 5px;
+            margin: 12px 0;
+            font-size: clamp(1rem, 2.3vw, 1.45rem);
+            letter-spacing: .1em;
+        }
+
+        .answer-zone {
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: clamp(.82rem, 1.7vw, .98rem);
+        }
+
+        .buttons-row {
+            gap: 7px;
+        }
+
+        button {
+            padding: 9px 10px;
+            border-radius: 11px;
+            font-size: .72rem;
+            box-shadow: 0 6px 0 rgba(23,34,56,.18);
+        }
+
+        .btn-save {
+            margin-top: 10px;
+        }
+
+        .feedback {
+            min-height: 26px;
+            margin-top: 6px;
+            font-size: .82rem;
+        }
+
+        .side-panel {
+            padding: 16px;
+        }
+
+        .score-card {
+            padding: 16px;
+            border-radius: 14px;
+        }
+
+        .score-label {
+            font-size: .56rem;
+            letter-spacing: .15em;
+        }
+
+        .score-value {
+            font-size: 2.1rem;
+        }
+
+        .mini-collage {
+            margin-top: 16px;
+            gap: 8px;
+        }
+
+        .clip {
+            padding: 5px 8px;
+            font-size: .75rem;
+        }
+
+        .final-score {
+            font-size: clamp(1.4rem, 3.2vw, 2.35rem);
+        }
+
+        footer {
+            padding: 10px 10px;
+            font-size: 10.5px;
+        }
+
+
+
+        .team-setup {
+            margin: 0 auto 16px;
+            max-width: 560px;
+            padding: 12px;
+            border: 1px solid rgba(23,34,56,.16);
+            border-radius: 16px;
+            background: rgba(255,248,235,.62);
+        }
+
+        .team-setup-title {
+            margin-bottom: 9px;
+            font-size: .72rem;
+            font-weight: 900;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: rgba(23,34,56,.72);
+        }
+
+        .team-options {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 7px;
+        }
+
+        .team-option {
+            padding: 8px 6px;
+            border-radius: 10px;
+            font-size: .68rem;
+            background: rgba(23,34,56,.72);
+            box-shadow: 0 5px 0 rgba(23,34,56,.16);
+        }
+
+        .team-option.active {
+            background: var(--accent);
+            outline: 2px solid rgba(212,168,71,.85);
+        }
+
+        .score-team-name {
+            font-size: 1.38rem;
+            letter-spacing: -.02em;
+            white-space: nowrap;
+        }
+
+        .active-team-score {
+            margin-top: 8px;
+            font-size: .76rem;
+            font-weight: 900;
+            color: rgba(255,248,235,.82);
+        }
+
+        .team-score-list {
+            position: relative;
+            z-index: 2;
+            margin-top: 16px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .team-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 12px;
+            background: rgba(255,248,235,.74);
+            border: 1px solid rgba(23,34,56,.13);
+            font-size: .76rem;
+            font-weight: 900;
+            box-shadow: 4px 4px 0 rgba(23,34,56,.06);
+        }
+
+        .team-score-row.active {
+            background: rgba(212,168,71,.28);
+            border-color: rgba(155,45,34,.35);
+            color: var(--accent);
+        }
+
+        .team-score-row strong {
+            font-family: Georgia, serif;
+            font-size: .96rem;
+        }
+
+        .final-score-list {
+            display: grid;
+            gap: 8px;
+            max-width: 360px;
+            margin: 0 auto 18px;
+        }
+
+        @media (max-width: 860px) {
+            body { padding-top: 22px; }
+            .masthead { padding-right: 88px; }
+            .game-frame { grid-template-columns: 1fr; }
+            .side-panel { order: -1; }
+            .side-panel { display: grid; grid-template-columns: 1fr 1.2fr; gap: 18px; align-items: start; }
+            .mini-collage { margin-top: 0; }
+            .buttons-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .team-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .logo-pin { width: 72px; }
+        }
+
+        @media (max-width: 560px) {
+            body { padding: 18px 12px 96px; }
+            .masthead { padding-right: 76px; }
+            .side-panel { grid-template-columns: 1fr; }
+            .top-strip { align-items: flex-start; }
+            .timer { width: 62px; height: 62px; }
+            .timer-inner { width: 44px; height: 44px; font-size: 1rem; }
+            .buttons-row { grid-template-columns: 1fr; }
+            .team-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .collage-card { min-height: auto; padding: 22px; }
+            .definition-card { transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <a class="logo-pin" aria-label="NGR Edu Hub logo">
+        <img src="ngr-logo.png" alt="NGR Edu Hub logo">
+    </a>
+
+    <main class="app">
+        <header class="masthead">
+            <span class="kicker">ΝΕΟΕΛΛΗΝΙΚΗ ΓΛΩΣΣΑ Γ΄ ΓΥΜΝΑΣΙΟΥ</span>
+            <h1>Πόσο πλούσια είναι τα ελληνικά σου;</h1>
+            <p class="masthead-subtitle">Λεξιλογικό παιχνίδι για τη Νεοελληνική Γλώσσα Γ΄ Γυμνασίου.</p>
+        </header>
+
+        <section class="game-frame" aria-label="Λεξιλόγιο">
+            <article class="collage-card">
+                <div class="paper-scrap" aria-hidden="true"></div>
+
+                <section id="start-screen" class="start-screen">
+                    <div class="start-box">
+                        <div class="stamp">200+<br>λέξεις</div>
+                        <h2 class="start-title">Βρες τη λέξη πριν τελειώσει ο χρόνος.</h2>
+                        <p class="start-copy">Λεξιλογικό παιχνίδι για τη Νεοελληνική Γλώσσα Γ΄ Γυμνασίου.</p>
+                        <div class="team-setup" aria-label="Επιλογή ομάδων">
+                            <div class="team-setup-title">Πόσες ομάδες παίζουν;</div>
+                            <div class="team-options">
+                                <button type="button" class="team-option active" data-team-count="1" onclick="selectTeamCount(1)">1 ομάδα</button>
+                                <button type="button" class="team-option" data-team-count="2" onclick="selectTeamCount(2)">2 ομάδες</button>
+                                <button type="button" class="team-option" data-team-count="3" onclick="selectTeamCount(3)">3 ομάδες</button>
+                                <button type="button" class="team-option" data-team-count="4" onclick="selectTeamCount(4)">4 ομάδες</button>
+                                <button type="button" class="team-option" data-team-count="5" onclick="selectTeamCount(5)">5 ομάδες</button>
+                            </div>
+                        </div>
+                        <button class="btn-start" onclick="startGame()">▶️ Έναρξη παιχνιδιού</button>
+                    </div>
+                </section>
+
+                <section id="game-area" class="hidden">
+                    <div class="top-strip">
+                        <div class="badges">
+                            <span class="badge" id="word-pos">Μέρος του λόγου</span>
+                            <span class="badge alt" id="word-theme">Θεματική</span>
+                        </div>
+                        <div class="timer" id="timer-ring" aria-label="Χρονόμετρο">
+                            <div class="timer-inner"><span id="timer-text">30</span></div>
+                        </div>
+                    </div>
+
+                    <div class="definition-card">
+                        <p class="definition" id="word-def">...</p>
+                    </div>
+
+                    <div class="hint-display" id="word-hints" aria-label="Βοήθεια γραμμάτων"></div>
+                    <div class="feedback" id="feedback-msg" aria-live="polite"></div>
+
+                    <div class="answer-zone">
+                        <input type="text" id="user-input" placeholder="Γράψε ή πες τη λέξη..." autocomplete="off">
+                        <div class="buttons-row">
+                            <button class="btn-hint" onclick="revealHint()">💡 Βοήθεια</button>
+                            <button class="btn-submit" onclick="checkAnswer()">✔️ Απάντηση</button>
+                            <button class="btn-teacher" onclick="teacherOverride()">🎉 Το βρήκε!</button>
+                            <button class="btn-pass" onclick="passWord()">⏭️ Πάσο</button>
+                        </div>
+                    </div>
+
+                    <button class="btn-save" onclick="saveGame()">💾 Αποθήκευση συνεδρίας</button>
+                </section>
+
+                <section id="end-screen" class="hidden">
+                    <div class="end-box">
+                        <div class="stamp">ΤΕΛΟΣ</div>
+                        <h2 class="start-title">Ολοκληρώθηκε το λεξιλογικό κολάζ!</h2>
+                        <p class="start-copy">Μπορείς να ξαναπαίξεις από την αρχή ή να χρησιμοποιήσεις το παιχνίδι σε ομάδες.</p>
+                        <div class="final-score" id="final-score">Σκορ: 0</div>
+                        <div class="final-score-list" id="final-score-list"></div>
+                        <button class="btn-reset" onclick="resetGame()">🔄 Παίξε ξανά</button>
+                    </div>
+                </section>
+            </article>
+
+            <aside class="side-panel" aria-label="Πίνακας σκορ">
+                <div class="score-card">
+                    <div class="score-label">ΕΝΕΡΓΗ ΟΜΑΔΑ</div>
+                    <div class="score-value score-team-name" id="current-team-label">Ομάδα 1</div>
+                    <div class="active-team-score" id="score-text">0 πόντοι</div>
+                </div>
+
+                <div class="team-score-list" id="team-score-list" aria-label="Σκορ ομάδων">
+                    <div class="team-score-row active"><span>Ομάδα 1</span><strong>0</strong></div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <footer>
+        Σχεδιασμός: Παναγιώτης Δόμβρος, Εκπαιδευτικός-Θεατρολόγος, Διευθυντής 1ου Γυμνασίου Πυλαίας
+    </footer>
+
+<script>
+    const vocabulary = [
+        {
+                "word": "ΕΦΗΜΕΡΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Χρόνος και κοινωνική ζωή",
+                "def": "Αυτός που διαρκεί πολύ λίγο και χάνεται γρήγορα, όπως μια παροδική εντύπωση ή μια πρόσκαιρη επιτυχία."
+        },
+        {
+                "word": "ΚΑΙΝΟΤΟΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Τεχνολογία και πρόοδος",
+                "def": "Η εισαγωγή νέων, πρωτότυπων ιδεών, μεθόδων ή λύσεων που αλλάζουν τον τρόπο με τον οποίο σκεφτόμαστε ή εργαζόμαστε."
+        },
+        {
+                "word": "ΑΠΟΤΡΕΠΩ",
+                "pos": "Ρήμα",
+                "theme": "Επιχειρηματολογία",
+                "def": "Εμποδίζω κάποιον να κάνει κάτι ή τον πείθω να αλλάξει απόφαση, συνήθως προβάλλοντας λόγους και συνέπειες."
+        },
+        {
+                "word": "ΑΝΑΛΓΗΤΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Ανθρώπινες σχέσεις",
+                "def": "Αυτός που δεν συγκινείται από τον πόνο ή τη δυσκολία των άλλων και φαίνεται σκληρός ή άσπλαχνος."
+        },
+        {
+                "word": "ΙΔΙΟΤΕΛΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ηθικές αξίες",
+                "def": "Η επιδίωξη του προσωπικού συμφέροντος χωρίς σεβασμό στις ανάγκες, τα δικαιώματα ή την αξιοπρέπεια των άλλων."
+        },
+        {
+                "word": "ΑΛΛΗΛΕΓΓΥΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική συνοχή",
+                "def": "Η αμοιβαία βοήθεια και υποστήριξη ανάμεσα σε ανθρώπους ή ομάδες, ιδιαίτερα όταν κάποιος αντιμετωπίζει δυσκολίες."
+        },
+        {
+                "word": "ΣΤΕΡΕΟΤΥΠΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Ρατσισμός και προκαταλήψεις",
+                "def": "Παγιωμένη και απλουστευμένη αντίληψη για άτομα ή ομάδες, που συχνά οδηγεί σε άδικες γενικεύσεις."
+        },
+        {
+                "word": "ΕΞΑΛΕΙΦΩ",
+                "pos": "Ρήμα",
+                "theme": "Κοινωνικά προβλήματα",
+                "def": "Κάνω κάτι να πάψει να υπάρχει, το περιορίζω πλήρως ή το αφαιρώ από μια κατάσταση."
+        },
+        {
+                "word": "ΡΑΤΣΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ισότητα και δικαιώματα",
+                "def": "Η διάκριση ή εχθρική στάση απέναντι σε ανθρώπους λόγω καταγωγής, χρώματος, θρησκείας, γλώσσας ή άλλων χαρακτηριστικών."
+        },
+        {
+                "word": "ΠΡΟΚΑΤΑΛΗΨΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνικές αντιλήψεις",
+                "def": "Αρνητική ή θετική γνώμη που σχηματίζεται εκ των προτέρων, χωρίς επαρκή γνώση, τεκμήρια ή προσωπική κρίση."
+        },
+        {
+                "word": "ΑΜΙΓΗΣ",
+                "pos": "Επίθετο",
+                "theme": "Γλώσσα και έννοιες",
+                "def": "Αυτός που αποτελείται από ένα μόνο είδος στοιχείων και δεν περιέχει ξένες προσμίξεις ή διαφορετικά μέρη."
+        },
+        {
+                "word": "ΓΑΛΟΥΧΩ",
+                "pos": "Ρήμα",
+                "theme": "Παιδεία και αξίες",
+                "def": "Ανατρέφω και διαπαιδαγωγώ κάποιον με συγκεκριμένες αρχές, ιδέες, συνήθειες ή αξίες από μικρή ηλικία."
+        },
+        {
+                "word": "ΠΑΡΑΚΜΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός και κοινωνία",
+                "def": "Η σταδιακή πτώση της ποιότητας, της δύναμης ή της ακμής ενός ανθρώπου, θεσμού ή πολιτισμού."
+        },
+        {
+                "word": "ΕΠΙΠΤΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Αίτιο και αποτέλεσμα",
+                "def": "Η συνέπεια που προκαλεί μια πράξη, μια απόφαση ή ένα γεγονός, συχνά με αρνητικό ή σοβαρό χαρακτήρα."
+        },
+        {
+                "word": "ΑΥΘΑΙΡΕΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δικαιοσύνη και κανόνες",
+                "def": "Η ενέργεια που γίνεται χωρίς σεβασμό σε νόμους, κανόνες ή δικαιώματα, με βάση την προσωπική βούληση."
+        },
+        {
+                "word": "ΑΚΕΡΑΙΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ηθική στάση",
+                "def": "Η εντιμότητα, η αξιοπιστία και η σταθερή προσήλωση ενός ανθρώπου σε αξίες και δίκαιες αρχές."
+        },
+        {
+                "word": "ΠΡΟΑΣΠΙΖΩ",
+                "pos": "Ρήμα",
+                "theme": "Δικαιώματα και θεσμοί",
+                "def": "Υπερασπίζομαι με σταθερότητα ένα δικαίωμα, μια αξία, έναν θεσμό ή ένα πρόσωπο που κινδυνεύει."
+        },
+        {
+                "word": "ΠΑΡΩΧΗΜΕΝΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Παράδοση και αλλαγή",
+                "def": "Αυτός που έχει ξεπεραστεί από τις εξελίξεις και δεν ανταποκρίνεται πλέον στις ανάγκες της εποχής."
+        },
+        {
+                "word": "ΑΛΛΟΤΡΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σύγχρονη ζωή",
+                "def": "Η αποξένωση του ανθρώπου από τον εαυτό του, τους άλλους, τη φύση ή την ουσία της εργασίας του."
+        },
+        {
+                "word": "ΣΥΓΚΑΤΑΒΑΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Συνεργασία",
+                "def": "Αυτός που δείχνει κατανόηση, γίνεται υποχωρητικός όταν χρειάζεται και αντιμετωπίζει τους άλλους με επιείκεια."
+        },
+        {
+                "word": "ΑΜΕΡΟΛΗΠΤΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κρίση και δικαιοσύνη",
+                "def": "Αυτός που κρίνει δίκαια, χωρίς να ευνοεί κάποιον λόγω προσωπικής σχέσης, συμφέροντος ή προκατάληψης."
+        },
+        {
+                "word": "ΑΝΑΧΡΟΝΙΣΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Παρελθόν και παρόν",
+                "def": "Αυτός που ανήκει σε παλαιότερη εποχή και δεν ταιριάζει στις σημερινές αντιλήψεις ή συνθήκες."
+        },
+        {
+                "word": "ΕΦΗΣΥΧΑΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ενεργός πολίτης",
+                "def": "Η υπερβολική ηρεμία και αδράνεια απέναντι σε προβλήματα ή κινδύνους που απαιτούν εγρήγορση και δράση."
+        },
+        {
+                "word": "ΥΠΟΒΑΘΜΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον και κοινωνία",
+                "def": "Η πτώση της ποιότητας, της αξίας ή της κατάστασης ενός χώρου, ενός αγαθού ή μιας υπηρεσίας."
+        },
+        {
+                "word": "ΦΙΛΑΛΛΗΛΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ανθρωπιστικές αξίες",
+                "def": "Η ειλικρινής αγάπη και φροντίδα προς τον συνάνθρωπο, χωρίς διάκριση ή υπολογισμό προσωπικού κέρδους."
+        },
+        {
+                "word": "ΜΕΡΟΛΗΨΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δικαιοσύνη",
+                "def": "Η άδικη εύνοια προς μια πλευρά ή ένα πρόσωπο, σε βάρος της αντικειμενικής και δίκαιης κρίσης."
+        },
+        {
+                "word": "ΑΝΤΙΞΟΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Προσωπική προσπάθεια",
+                "def": "Η δυσκολία, το εμπόδιο ή η δυσμενής κατάσταση που συναντά κάποιος στην πορεία προς έναν στόχο."
+        },
+        {
+                "word": "ΑΡΡΗΚΤΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Σχέσεις και δεσμοί",
+                "def": "Αυτός που δεν μπορεί να σπάσει, να διαλυθεί ή να διακοπεί εύκολα, όπως ένας πολύ ισχυρός δεσμός."
+        },
+        {
+                "word": "ΔΙΕΝΕΞΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σύγκρουση και διάλογος",
+                "def": "Η έντονη διαφωνία ή σύγκρουση ανάμεσα σε ανθρώπους, ομάδες ή κράτη, που μπορεί να οδηγήσει σε αντιπαράθεση."
+        },
+        {
+                "word": "ΑΚΑΜΠΤΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Στάσεις ζωής",
+                "def": "Αυτός που δεν υποχωρεί εύκολα στις απόψεις ή στις αποφάσεις του και δείχνει απόλυτη αδιαλλαξία."
+        },
+        {
+                "word": "ΑΝΙΔΙΟΤΕΛΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Εθελοντισμός",
+                "def": "Η προσφορά βοήθειας ή υπηρεσίας χωρίς προσδοκία ανταλλάγματος, αναγνώρισης ή προσωπικού οφέλους."
+        },
+        {
+                "word": "ΠΑΡΑΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πληροφόρηση",
+                "def": "Η σκόπιμη αλλοίωση της αλήθειας, των στοιχείων ή των γεγονότων, ώστε να δημιουργηθεί λανθασμένη εντύπωση."
+        },
+        {
+                "word": "ΚΑΤΑΝΑΛΩΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Σύγχρονη κοινωνία",
+                "def": "Η υπερβολική τάση για αγορά και χρήση αγαθών, ακόμη κι όταν δεν καλύπτουν πραγματικές ανάγκες."
+        },
+        {
+                "word": "ΣΥΝΑΙΝΕΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατικός διάλογος",
+                "def": "Η συμφωνία ή κοινή αποδοχή μιας πρότασης, απόφασης ή κατάστασης από περισσότερα πρόσωπα ή ομάδες."
+        },
+        {
+                "word": "ΠΟΛΥΦΩΝΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και δημοκρατία",
+                "def": "Η ύπαρξη και ελεύθερη έκφραση πολλών διαφορετικών απόψεων μέσα σε μια κοινωνία ή δημόσια συζήτηση."
+        },
+        {
+                "word": "ΠΕΡΙΘΩΡΙΟΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνικός αποκλεισμός",
+                "def": "Ο σταδιακός αποκλεισμός ενός ατόμου ή μιας ομάδας από την κοινωνική, σχολική, πολιτική ή οικονομική ζωή."
+        },
+        {
+                "word": "ΑΛΑΖΟΝΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Χαρακτήρας",
+                "def": "Η υπεροπτική στάση ανθρώπου που θεωρεί τον εαυτό του ανώτερο και περιφρονεί τους άλλους."
+        },
+        {
+                "word": "ΚΑΤΑΛΟΙΠΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Παρελθόν και κοινωνία",
+                "def": "Ό,τι έχει απομείνει από παλαιότερη εποχή, κατάσταση ή αντίληψη και εξακολουθεί να υπάρχει στο παρόν."
+        },
+        {
+                "word": "ΕΝΣΥΝΑΙΣΘΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Επικοινωνία",
+                "def": "Η ικανότητα να καταλαβαίνουμε τη θέση, τα συναισθήματα και τις ανάγκες ενός άλλου ανθρώπου."
+        },
+        {
+                "word": "ΔΙΑΠΛΗΚΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Σύγκρουση",
+                "def": "Ο έντονος λεκτικός καβγάς ή η προστριβή ανάμεσα σε ανθρώπους που διαφωνούν με οξύ τρόπο."
+        },
+        {
+                "word": "ΠΛΟΥΡΑΛΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Δημοκρατία",
+                "def": "Η αποδοχή της ποικιλίας ιδεών, απόψεων, τρόπων ζωής και ομάδων μέσα σε μια ανοιχτή κοινωνία."
+        },
+        {
+                "word": "ΦΑΝΑΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Διάλογος και ανεκτικότητα",
+                "def": "Η τυφλή και απόλυτη προσήλωση σε μια ιδέα, που συχνά οδηγεί σε μισαλλοδοξία ή βία."
+        },
+        {
+                "word": "ΜΙΣΑΛΛΟΔΟΞΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σεβασμός στη διαφορετικότητα",
+                "def": "Το έντονο μίσος ή η εχθρότητα απέναντι σε ανθρώπους που έχουν διαφορετικές αντιλήψεις, πεποιθήσεις ή ταυτότητα."
+        },
+        {
+                "word": "ΑΦΟΜΟΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμικές επαφές",
+                "def": "Η πλήρης προσαρμογή ενός ατόμου ή μιας ομάδας σε νέο περιβάλλον, συχνά με απώλεια παλαιών χαρακτηριστικών."
+        },
+        {
+                "word": "ΑΝΙΔΕΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Γνώση και άγνοια",
+                "def": "Αυτός που δεν έχει καμία ουσιαστική γνώση ή ενημέρωση για ένα συγκεκριμένο θέμα."
+        },
+        {
+                "word": "ΣΥΝΕΠΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Υπευθυνότητα",
+                "def": "Η συμφωνία λόγων και πράξεων, καθώς και η σταθερή τήρηση υποχρεώσεων, κανόνων ή υποσχέσεων."
+        },
+        {
+                "word": "ΚΕΝΟΔΟΞΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Χαρακτήρας",
+                "def": "Η επιθυμία για δόξα, θαυμασμό και προβολή, χωρίς ουσιαστική αξία ή πραγματικό έργο."
+        },
+        {
+                "word": "ΠΡΟΓΟΝΟΠΛΗΞΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Παράδοση",
+                "def": "Η υπερβολική και στείρα προσήλωση στο μεγαλείο των προγόνων, χωρίς δημιουργική σχέση με το παρόν."
+        },
+        {
+                "word": "ΧΕΙΡΑΦΕΤΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ελευθερία και δικαιώματα",
+                "def": "Η απελευθέρωση από έλεγχο, εξάρτηση ή καταπίεση και η απόκτηση αυτονομίας και υπευθυνότητας."
+        },
+        {
+                "word": "ΠΑΡΑΓΚΩΝΙΖΩ",
+                "pos": "Ρήμα",
+                "theme": "Κοινωνικές σχέσεις",
+                "def": "Βάζω κάποιον στο περιθώριο, τον αγνοώ σκόπιμα ή του στερώ ευκαιρίες προς όφελος άλλου."
+        },
+        {
+                "word": "ΑΝΘΡΩΠΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ανθρωπιστικές αξίες",
+                "def": "Σύνολο ιδεών που τοποθετούν στο κέντρο τον άνθρωπο, την αξιοπρέπεια, την ελευθερία και την ηθική του καλλιέργεια."
+        },
+        {
+                "word": "ΔΗΜΟΚΡΑΤΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολίτης και πολιτεία",
+                "def": "Το πολίτευμα και ο τρόπος ζωής που στηρίζονται στη συμμετοχή των πολιτών, τον διάλογο, την ισότητα και τον σεβασμό των δικαιωμάτων."
+        },
+        {
+                "word": "ΔΙΑΒΟΥΛΕΥΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημόσιος διάλογος",
+                "def": "Η οργανωμένη ανταλλαγή απόψεων πριν από μια απόφαση, ώστε να ακουστούν διαφορετικές προτάσεις και επιχειρήματα."
+        },
+        {
+                "word": "ΛΟΓΟΚΡΙΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ελευθερία λόγου",
+                "def": "Ο έλεγχος ή η απαγόρευση λόγου, έργων ή πληροφοριών από μια αρχή, ώστε να μην εκφραστούν ελεύθερα."
+        },
+        {
+                "word": "ΠΑΡΑΠΛΗΡΟΦΟΡΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και ψηφιακός κόσμος",
+                "def": "Η διάδοση ψευδών, παραπλανητικών ή ελλιπών πληροφοριών που οδηγούν το κοινό σε λανθασμένα συμπεράσματα."
+        },
+        {
+                "word": "ΔΙΑΣΤΡΕΒΛΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πληροφόρηση",
+                "def": "Η αλλοίωση του πραγματικού νοήματος ενός γεγονότος, μιας δήλωσης ή μιας άποψης, ώστε να παρουσιαστεί διαφορετικά."
+        },
+        {
+                "word": "ΤΕΚΜΗΡΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Παραγωγή λόγου",
+                "def": "Η στήριξη μιας άποψης με στοιχεία, παραδείγματα, πηγές και λογικά επιχειρήματα."
+        },
+        {
+                "word": "ΕΠΙΧΕΙΡΗΜΑΤΟΛΟΓΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Παραγωγή λόγου",
+                "def": "Η ανάπτυξη επιχειρημάτων με στόχο να πείσουμε, να εξηγήσουμε ή να υποστηρίξουμε μια θέση."
+        },
+        {
+                "word": "ΣΥΝΟΧΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κείμενο και λόγος",
+                "def": "Η λογική σύνδεση των μερών ενός κειμένου ή μιας ομάδας, ώστε να αποτελούν ενιαίο και κατανοητό σύνολο."
+        },
+        {
+                "word": "ΔΙΑΛΟΓΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Επικοινωνία",
+                "def": "Η ανταλλαγή απόψεων με ακρόαση, σεβασμό και επιχειρήματα, ώστε να προσεγγιστεί μια κοινή κατανόηση."
+        },
+        {
+                "word": "ΑΝΕΚΤΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Διαφορετικότητα",
+                "def": "Η στάση σεβασμού απέναντι σε διαφορετικές ιδέες, συνήθειες, πολιτισμούς ή τρόπους ζωής."
+        },
+        {
+                "word": "ΣΥΜΒΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική ζωή",
+                "def": "Η ειρηνική και οργανωμένη συνύπαρξη ανθρώπων ή ομάδων στον ίδιο χώρο, με κανόνες και αμοιβαίο σεβασμό."
+        },
+        {
+                "word": "ΣΥΜΜΕΤΟΧΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ενεργός πολίτης",
+                "def": "Η ενεργή παρουσία και δράση ενός ανθρώπου σε μια ομάδα, διαδικασία, κοινότητα ή δημοκρατική απόφαση."
+        },
+        {
+                "word": "ΕΘΕΛΟΝΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνική προσφορά",
+                "def": "Η προσφορά χρόνου, εργασίας ή γνώσεων για το κοινό καλό, χωρίς οικονομικό αντάλλαγμα."
+        },
+        {
+                "word": "ΕΥΑΙΣΘΗΤΟΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική δράση",
+                "def": "Η καλλιέργεια ενδιαφέροντος και υπεύθυνης στάσης απέναντι σε ένα κοινωνικό, περιβαλλοντικό ή ανθρωπιστικό ζήτημα."
+        },
+        {
+                "word": "ΑΕΙΦΟΡΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η ανάπτυξη που ικανοποιεί τις ανάγκες του παρόντος χωρίς να καταστρέφει τις δυνατότητες των επόμενων γενεών."
+        },
+        {
+                "word": "ΒΙΩΣΙΜΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον και ανάπτυξη",
+                "def": "Η δυνατότητα μιας κοινωνίας, οικονομίας ή πρακτικής να συνεχίζεται στο μέλλον χωρίς εξάντληση πόρων ή βλάβη στο περιβάλλον."
+        },
+        {
+                "word": "ΟΙΚΟΣΥΣΤΗΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Περιβάλλον",
+                "def": "Το σύνολο των ζωντανών οργανισμών και του φυσικού περιβάλλοντος με το οποίο αλληλεπιδρούν."
+        },
+        {
+                "word": "ΡΥΠΑΝΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η μόλυνση του αέρα, του νερού ή του εδάφους από ουσίες ή δραστηριότητες που βλάπτουν τη ζωή."
+        },
+        {
+                "word": "ΥΠΕΡΚΑΤΑΝΑΛΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κατανάλωση",
+                "def": "Η υπερβολική χρήση αγαθών και πόρων πέρα από τις πραγματικές ανάγκες, συχνά με περιβαλλοντικές και κοινωνικές συνέπειες."
+        },
+        {
+                "word": "ΠΑΓΚΟΣΜΙΟΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σύγχρονος κόσμος",
+                "def": "Η αυξανόμενη σύνδεση χωρών, οικονομιών, πολιτισμών και ανθρώπων μέσα από την τεχνολογία, το εμπόριο και την επικοινωνία."
+        },
+        {
+                "word": "ΔΙΑΠΟΛΙΤΙΣΜΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμικές επαφές",
+                "def": "Η δημιουργική συνάντηση και επικοινωνία διαφορετικών πολιτισμών με αμοιβαίο σεβασμό και διάθεση κατανόησης."
+        },
+        {
+                "word": "ΤΑΥΤΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Άτομο και κοινωνία",
+                "def": "Το σύνολο των χαρακτηριστικών, αξιών, εμπειριών και σχέσεων που κάνουν ένα άτομο ή μια ομάδα να ξεχωρίζει."
+        },
+        {
+                "word": "ΠΑΡΑΔΟΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Το σύνολο των συνηθειών, αξιών, γνώσεων και μορφών έκφρασης που μεταδίδονται από γενιά σε γενιά."
+        },
+        {
+                "word": "ΚΛΗΡΟΝΟΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Όσα παραλαμβάνουμε από το παρελθόν, υλικά ή άυλα, και έχουμε ευθύνη να τα γνωρίσουμε, να τα κρίνουμε και να τα διαφυλάξουμε."
+        },
+        {
+                "word": "ΠΟΛΙΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Τέχνη και κοινωνία",
+                "def": "Το σύνολο των πνευματικών, υλικών, κοινωνικών και καλλιτεχνικών δημιουργιών μιας κοινωνίας."
+        },
+        {
+                "word": "ΔΗΜΙΟΥΡΓΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Παιδεία και τέχνη",
+                "def": "Η ικανότητα παραγωγής νέων ιδεών, λύσεων ή έργων με φαντασία, πρωτοτυπία και προσωπική έκφραση."
+        },
+        {
+                "word": "ΚΡΙΤΙΚΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σκέψη και λόγος",
+                "def": "Η αξιολόγηση ενός έργου, γεγονότος ή επιχειρήματος με βάση κριτήρια, τεκμήρια και αιτιολογημένη άποψη."
+        },
+        {
+                "word": "ΑΞΙΟΛΟΓΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σχολείο και κοινωνία",
+                "def": "Η διαδικασία με την οποία εκτιμάται η ποιότητα, η αξία ή η αποτελεσματικότητα μιας πράξης, εργασίας ή επίδοσης."
+        },
+        {
+                "word": "ΜΕΤΑΝΑΣΤΕΥΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνικές μετακινήσεις",
+                "def": "Η μετακίνηση ανθρώπων από μια χώρα ή περιοχή σε άλλη, συνήθως για εργασία, ασφάλεια ή καλύτερες συνθήκες ζωής."
+        },
+        {
+                "word": "ΠΡΟΣΦΥΓΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ανθρώπινα δικαιώματα",
+                "def": "Η αναγκαστική εγκατάλειψη της πατρίδας λόγω πολέμου, διωγμών, βίας ή σοβαρού κινδύνου."
+        },
+        {
+                "word": "ΕΝΤΑΞΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική συνοχή",
+                "def": "Η ουσιαστική συμμετοχή ενός ατόμου ή μιας ομάδας στη ζωή της κοινωνίας, με ίσες ευκαιρίες και σεβασμό."
+        },
+        {
+                "word": "ΑΠΟΚΛΕΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνικά προβλήματα",
+                "def": "Η απομάκρυνση ή παρεμπόδιση ενός ατόμου ή μιας ομάδας από δικαιώματα, ευκαιρίες, υπηρεσίες ή κοινωνική συμμετοχή."
+        },
+        {
+                "word": "ΔΙΚΑΙΩΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Πολίτης και θεσμοί",
+                "def": "Η αναγνωρισμένη δυνατότητα ενός ανθρώπου να απολαμβάνει ελευθερίες, αγαθά ή προστασία που κατοχυρώνονται από κανόνες και νόμους."
+        },
+        {
+                "word": "ΥΠΟΧΡΕΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολίτης και ευθύνη",
+                "def": "Αυτό που οφείλει να κάνει κάποιος απέναντι στον εαυτό του, στους άλλους, στην κοινότητα ή στους νόμους."
+        },
+        {
+                "word": "ΙΣΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δικαιώματα",
+                "def": "Η αρχή σύμφωνα με την οποία όλοι οι άνθρωποι έχουν την ίδια αξία και πρέπει να αντιμετωπίζονται χωρίς διακρίσεις."
+        },
+        {
+                "word": "ΙΣΟΝΟΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δικαιοσύνη και νόμοι",
+                "def": "Η ίση εφαρμογή των νόμων σε όλους τους πολίτες, ανεξάρτητα από θέση, καταγωγή ή οικονομική κατάσταση."
+        },
+        {
+                "word": "ΔΙΚΑΙΟΣΥΝΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Θεσμοί και κοινωνία",
+                "def": "Η αρχή της δίκαιης αντιμετώπισης ανθρώπων και καταστάσεων, με σεβασμό στους κανόνες, στην αλήθεια και στα δικαιώματα."
+        },
+        {
+                "word": "ΕΙΡΗΝΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πόλεμος και ειρήνη",
+                "def": "Η κατάσταση απουσίας πολέμου και βίας, αλλά και η καλλιέργεια συνεργασίας, ασφάλειας και αμοιβαίου σεβασμού."
+        },
+        {
+                "word": "ΕΧΘΡΟΠΡΑΞΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πόλεμος και σύγκρουση",
+                "def": "Η εχθρική πράξη ή στρατιωτική ενέργεια ανάμεσα σε αντιπάλους, που μπορεί να οδηγήσει σε κλιμάκωση της σύγκρουσης."
+        },
+        {
+                "word": "ΣΥΜΦΙΛΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ειρήνη και συνεργασία",
+                "def": "Η αποκατάσταση σχέσεων μετά από σύγκρουση, με αναγνώριση λαθών, διάλογο και διάθεση συνεννόησης."
+        },
+        {
+                "word": "ΑΝΤΙΠΑΡΑΘΕΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Επιχειρηματολογία",
+                "def": "Η σύγκρουση απόψεων ή θέσεων, συνήθως σε δημόσιο διάλογο, όπου κάθε πλευρά προσπαθεί να υποστηρίξει τη θέση της."
+        },
+        {
+                "word": "ΑΝΤΙΛΟΓΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Παραγωγή λόγου",
+                "def": "Η απάντηση ή αντίρρηση σε μια άποψη, που παρουσιάζει διαφορετική σκέψη ή επιχειρηματολογία."
+        },
+        {
+                "word": "ΠΡΟΣΕΓΓΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Σκέψη και ερμηνεία",
+                "def": "Ο τρόπος με τον οποίο εξετάζουμε, ερμηνεύουμε ή αντιμετωπίζουμε ένα ζήτημα, ένα κείμενο ή ένα πρόβλημα."
+        },
+        {
+                "word": "ΤΕΧΝΟΛΟΓΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Το σύνολο των γνώσεων, εργαλείων και εφαρμογών που αξιοποιεί ο άνθρωπος για να λύνει προβλήματα και να βελτιώνει τη ζωή του."
+        },
+        {
+                "word": "ΨΗΦΙΑΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Ψηφιακή επικοινωνία",
+                "def": "Αυτός που σχετίζεται με υπολογιστές, διαδίκτυο, δεδομένα ή ηλεκτρονικές μορφές πληροφορίας και επικοινωνίας."
+        },
+        {
+                "word": "ΠΛΗΡΟΦΟΡΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ενημέρωση",
+                "def": "Το στοιχείο γνώσης ή ενημέρωσης που μας βοηθά να κατανοήσουμε ένα γεγονός, μια κατάσταση ή ένα ζήτημα."
+        },
+        {
+                "word": "ΙΔΙΩΤΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακά δικαιώματα",
+                "def": "Το δικαίωμα του ανθρώπου να προστατεύει προσωπικά στοιχεία, σκέψεις και πλευρές της ζωής του από ανεπιθύμητη έκθεση."
+        },
+        {
+                "word": "ΑΥΤΟΝΟΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Προσωπική ανάπτυξη",
+                "def": "Η δυνατότητα ενός ανθρώπου ή μιας ομάδας να παίρνει αποφάσεις και να ενεργεί με ανεξαρτησία και ευθύνη."
+        },
+        {
+                "word": "ΥΠΕΥΘΥΝΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Στάση ζωής",
+                "def": "Η συνειδητή ανάληψη ευθυνών για τις πράξεις, τις επιλογές και τις συνέπειές τους απέναντι στον εαυτό μας και στους άλλους."
+        },
+        {
+                "word": "ΚΟΙΝΩΝΙΚΟΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η διαδικασία με την οποία το άτομο μαθαίνει κανόνες, αξίες και συμπεριφορές ώστε να ενταχθεί ομαλά στην κοινωνία."
+        },
+        {
+                "word": "ΘΕΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνία και πολιτεία",
+                "def": "Σταθερή κοινωνική ή πολιτική οργάνωση, όπως η οικογένεια, το σχολείο ή η δικαιοσύνη, που ρυθμίζει τη συλλογική ζωή."
+        },
+        {
+                "word": "ΣΥΛΛΟΓΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η αντίληψη ότι οι άνθρωποι μπορούν να δρουν μαζί, με κοινό σκοπό, ευθύνη και αλληλοστήριξη."
+        },
+        {
+                "word": "ΣΕΒΑΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ηθικές αξίες",
+                "def": "Η αναγνώριση της αξίας ενός ανθρώπου, ενός δικαιώματος ή ενός κανόνα και η ανάλογη προσεκτική συμπεριφορά."
+        },
+        {
+                "word": "ΑΞΙΟΠΡΕΠΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ανθρώπινα δικαιώματα",
+                "def": "Η αξία που έχει κάθε άνθρωπος και απαιτεί να αντιμετωπίζεται με σεβασμό, χωρίς προσβολές ή εξευτελισμό."
+        },
+        {
+                "word": "ΜΕΡΙΜΝΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική πολιτική",
+                "def": "Η οργανωμένη φροντίδα για την κάλυψη αναγκών, ιδιαίτερα όταν αφορά παιδιά, ηλικιωμένους ή ευάλωτες ομάδες."
+        },
+        {
+                "word": "ΠΡΟΝΟΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική πολιτική",
+                "def": "Η φροντίδα που προσφέρει η κοινωνία ή το κράτος σε ανθρώπους που χρειάζονται υποστήριξη και προστασία."
+        },
+        {
+                "word": "ΣΥΝΥΠΑΡΞΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική συνοχή",
+                "def": "Η ειρηνική ζωή διαφορετικών ανθρώπων ή ομάδων στον ίδιο χώρο, με αμοιβαίο σεβασμό και αποδοχή."
+        },
+        {
+                "word": "ΔΙΑΦΟΡΕΤΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Το γεγονός ότι οι άνθρωποι δεν είναι ίδιοι μεταξύ τους ως προς την καταγωγή, τις ιδέες, τις εμπειρίες ή τον τρόπο ζωής."
+        },
+        {
+                "word": "ΠΟΛΙΤΗΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Δημοκρατία",
+                "def": "Το μέλος μιας πολιτείας που έχει δικαιώματα, υποχρεώσεις και δυνατότητα συμμετοχής στη δημόσια ζωή."
+        },
+        {
+                "word": "ΠΟΛΙΤΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Η οργανωμένη μορφή μιας κοινωνίας με θεσμούς, νόμους και κανόνες που ρυθμίζουν τη ζωή των πολιτών."
+        },
+        {
+                "word": "ΘΕΣΜΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Πολιτεία",
+                "def": "Αυτός που σχετίζεται με τους επίσημους θεσμούς, τους κανόνες και τη λειτουργία μιας οργανωμένης κοινωνίας."
+        },
+        {
+                "word": "ΛΟΓΟΔΟΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Η υποχρέωση ενός προσώπου ή φορέα να εξηγεί τις πράξεις του και να αναλαμβάνει ευθύνη για αυτές."
+        },
+        {
+                "word": "ΔΙΑΦΑΝΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Η καθαρή και ανοιχτή λειτουργία θεσμών ή διαδικασιών, ώστε οι πολίτες να γνωρίζουν τι αποφασίζεται και γιατί."
+        },
+        {
+                "word": "ΣΥΜΜΕΤΟΧΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Δημοκρατία",
+                "def": "Αυτός που επιτρέπει ή ενθαρρύνει την ενεργή συμμετοχή πολλών ανθρώπων στη λήψη αποφάσεων."
+        },
+        {
+                "word": "ΔΗΜΟΣΙΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κοινωνία και πολιτεία",
+                "def": "Αυτός που αφορά το σύνολο των πολιτών ή ανήκει στον κοινό χώρο της κοινωνικής και πολιτικής ζωής."
+        },
+        {
+                "word": "ΑΥΤΑΡΧΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Δημοκρατία",
+                "def": "Τρόπος άσκησης εξουσίας που στηρίζεται στην επιβολή και περιορίζει την ελευθερία, τον διάλογο και τη συμμετοχή."
+        },
+        {
+                "word": "ΝΟΜΙΜΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτεία",
+                "def": "Η συμφωνία μιας πράξης ή απόφασης με τους νόμους και τους κανόνες που ισχύουν σε μια κοινωνία."
+        },
+        {
+                "word": "ΑΝΟΧΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η αποδοχή της ύπαρξης διαφορετικών απόψεων ή συμπεριφορών, χωρίς επιθετικότητα ή αποκλεισμό."
+        },
+        {
+                "word": "ΑΚΤΙΒΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνική δράση",
+                "def": "Η ενεργή δημόσια δράση για την υπεράσπιση μιας ιδέας, ενός δικαιώματος ή ενός κοινωνικού σκοπού."
+        },
+        {
+                "word": "ΚΟΙΝΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Ομάδα ανθρώπων που συνδέονται με κοινό τόπο, ενδιαφέροντα, αξίες ή στόχους και αισθάνονται ότι ανήκουν μαζί."
+        },
+        {
+                "word": "ΙΣΟΤΙΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ανθρώπινα δικαιώματα",
+                "def": "Η κατάσταση στην οποία οι άνθρωποι αναγνωρίζονται ως ίσοι σε αξία και έχουν δίκαιες δυνατότητες συμμετοχής."
+        },
+        {
+                "word": "ΚΟΥΛΤΟΥΡΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Το σύνολο των συνηθειών, αξιών, ιδεών και τρόπων έκφρασης που χαρακτηρίζουν μια κοινωνία ή ομάδα."
+        },
+        {
+                "word": "ΠΟΛΙΤΙΣΜΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Πολιτισμός",
+                "def": "Αυτός που σχετίζεται με τις αξίες, τις παραδόσεις, τη γλώσσα και τον τρόπο ζωής μιας κοινωνίας."
+        },
+        {
+                "word": "ΠΟΛΙΤΙΣΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Πολιτισμός",
+                "def": "Αυτός που σχετίζεται με την τέχνη, τις εκδηλώσεις, τα μνημεία και τις δημιουργίες ενός πολιτισμού."
+        },
+        {
+                "word": "ΚΛΗΡΟΔΟΤΗΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Πολιτισμός",
+                "def": "Κάτι σημαντικό που έχει παραδοθεί από το παρελθόν στις επόμενες γενιές, όπως μια αξία, ένα έργο ή μια παράδοση."
+        },
+        {
+                "word": "ΜΝΗΜΕΙΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Πολιτισμός",
+                "def": "Κτίσμα, έργο ή τόπος που θυμίζει σημαντικά πρόσωπα, γεγονότα ή στοιχεία της ιστορίας και του πολιτισμού."
+        },
+        {
+                "word": "ΠΑΡΑΔΟΣΙΑΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Πολιτισμός",
+                "def": "Αυτός που συνδέεται με τις συνήθειες, τις αξίες και τις μορφές ζωής που μεταδίδονται από γενιά σε γενιά."
+        },
+        {
+                "word": "ΣΥΝΕΧΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Η αδιάκοπη σύνδεση ανάμεσα στο παρελθόν, το παρόν και το μέλλον ενός ανθρώπου, λαού ή πολιτισμού."
+        },
+        {
+                "word": "ΑΝΑΒΙΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Η επαναφορά μιας παλιάς συνήθειας, τέχνης ή παράδοσης στη σύγχρονη ζωή με νέο ενδιαφέρον."
+        },
+        {
+                "word": "ΑΦΗΓΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και πολιτισμός",
+                "def": "Η παρουσίαση γεγονότων με σειρά, ώστε ο ακροατής ή ο αναγνώστης να παρακολουθεί μια ιστορία ή εμπειρία."
+        },
+        {
+                "word": "ΑΙΣΘΗΤΙΚΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Τέχνη και πολιτισμός",
+                "def": "Η αντίληψη για το ωραίο, την αρμονία και τον τρόπο με τον οποίο ένα έργο ή ένας χώρος προκαλεί συγκίνηση."
+        },
+        {
+                "word": "ΤΕΧΝΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Πολιτισμός",
+                "def": "Η δημιουργική έκφραση του ανθρώπου με λόγο, εικόνα, ήχο, κίνηση ή άλλες μορφές που προκαλούν σκέψη και συναίσθημα."
+        },
+        {
+                "word": "ΜΟΥΣΕΙΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Πολιτισμός",
+                "def": "Χώρος όπου φυλάσσονται, παρουσιάζονται και ερμηνεύονται αντικείμενα με ιστορική, καλλιτεχνική ή επιστημονική αξία."
+        },
+        {
+                "word": "ΠΑΙΔΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Εκπαίδευση και πολιτισμός",
+                "def": "Η καλλιέργεια του ανθρώπου μέσα από τη γνώση, τη γλώσσα, τις αξίες, την τέχνη και την κριτική σκέψη."
+        },
+        {
+                "word": "ΦΙΛΑΝΑΓΝΩΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και πολιτισμός",
+                "def": "Η αγάπη για την ανάγνωση βιβλίων και η συνήθεια να αναζητά κανείς γνώση, απόλαυση και σκέψη μέσα από το διάβασμα."
+        },
+        {
+                "word": "ΑΠΟΤΥΠΩΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Πολιτισμός και περιβάλλον",
+                "def": "Το ίχνος ή η επίδραση που αφήνει μια πράξη, ένας άνθρωπος ή ένας τρόπος ζωής στο περιβάλλον και στην κοινωνία."
+        },
+        {
+                "word": "ΣΥΜΒΟΛΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Πολιτισμός",
+                "def": "Η χρήση ενός αντικειμένου, χρώματος, εικόνας ή λέξης για να εκφραστεί μια βαθύτερη ιδέα ή αξία."
+        },
+        {
+                "word": "ΙΣΤΟΡΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ιστορία και πολιτισμός",
+                "def": "Η σύνδεση ενός φαινομένου με τον χρόνο, τις συνθήκες και τα γεγονότα της εποχής στην οποία εμφανίστηκε."
+        },
+        {
+                "word": "ΑΝΑΚΥΚΛΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η επεξεργασία χρησιμοποιημένων υλικών ώστε να γίνουν ξανά χρήσιμα και να μειωθούν τα απορρίμματα."
+        },
+        {
+                "word": "ΕΝΕΡΓΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η δύναμη που επιτρέπει τη λειτουργία μηχανών, σπιτιών και μεταφορών, αλλά χρειάζεται υπεύθυνη χρήση και εξοικονόμηση."
+        },
+        {
+                "word": "ΒΙΟΠΟΙΚΙΛΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η ποικιλία των ειδών ζωής σε έναν τόπο ή σε ολόκληρο τον πλανήτη, απαραίτητη για την ισορροπία της φύσης."
+        },
+        {
+                "word": "ΚΛΙΜΑΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Περιβάλλον",
+                "def": "Αυτός που σχετίζεται με το κλίμα και τις αλλαγές του, ιδιαίτερα όταν επηρεάζουν τη φύση και την ανθρώπινη ζωή."
+        },
+        {
+                "word": "ΕΞΟΙΚΟΝΟΜΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η προσεκτική χρήση πόρων, όπως νερού ή ενέργειας, ώστε να αποφεύγεται η σπατάλη."
+        },
+        {
+                "word": "ΑΠΟΡΡΙΜΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Περιβάλλον",
+                "def": "Κάθε υλικό που πετιέται ως άχρηστο, αλλά συχνά μπορεί να μειωθεί, να επαναχρησιμοποιηθεί ή να ανακυκλωθεί."
+        },
+        {
+                "word": "ΕΥΘΥΝΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και περιβάλλον",
+                "def": "Η υποχρέωση να αναγνωρίζουμε τις συνέπειες των πράξεών μας και να ενεργούμε με σοβαρότητα και σεβασμό."
+        },
+        {
+                "word": "ΚΑΤΑΣΤΡΟΦΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η σοβαρή βλάβη ή απώλεια που προκαλείται σε έναν τόπο, σε ανθρώπους ή στη φύση από ανθρώπινα ή φυσικά αίτια."
+        },
+        {
+                "word": "ΠΡΟΣΤΑΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον και δικαιώματα",
+                "def": "Η φροντίδα και η λήψη μέτρων ώστε να μην απειληθεί ένας άνθρωπος, ένας θεσμός ή το φυσικό περιβάλλον."
+        },
+        {
+                "word": "ΑΝΑΒΑΘΜΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον και κοινωνία",
+                "def": "Η βελτίωση της ποιότητας, της αξίας ή της λειτουργίας ενός χώρου, μιας υπηρεσίας ή μιας κατάστασης."
+        },
+        {
+                "word": "ΟΙΚΟΛΟΓΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον",
+                "def": "Η μελέτη και ο σεβασμός των σχέσεων ανάμεσα στους ζωντανούς οργανισμούς και το περιβάλλον όπου ζουν."
+        },
+        {
+                "word": "ΑΝΑΝΕΩΣΙΜΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Περιβάλλον",
+                "def": "Αυτός που μπορεί να ανανεώνεται φυσικά, όπως ο ήλιος, ο άνεμος ή άλλες πηγές ενέργειας που δεν εξαντλούνται εύκολα."
+        },
+        {
+                "word": "ΕΚΠΟΜΠΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Περιβάλλον και ΜΜΕ",
+                "def": "Η απελευθέρωση ουσιών στην ατμόσφαιρα ή η μετάδοση ενός προγράμματος από ραδιόφωνο, τηλεόραση ή διαδίκτυο."
+        },
+        {
+                "word": "ΠΡΟΛΗΨΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και περιβάλλον",
+                "def": "Η έγκαιρη ενέργεια για να αποφευχθεί ένα πρόβλημα, ένας κίνδυνος ή μια αρνητική συνέπεια."
+        },
+        {
+                "word": "ΠΑΡΕΜΒΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνική δράση",
+                "def": "Η ενέργεια με την οποία κάποιος επεμβαίνει σε μια κατάσταση για να την αλλάξει, να τη βελτιώσει ή να την εμποδίσει."
+        },
+        {
+                "word": "ΠΛΗΡΟΦΟΡΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Η παροχή και λήψη πληροφοριών για γεγονότα, ζητήματα ή απόψεις, μέσα από πηγές και μέσα ενημέρωσης."
+        },
+        {
+                "word": "ΕΝΗΜΕΡΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Η διαδικασία με την οποία μαθαίνουμε νέα γεγονότα ή αποκτούμε γνώση για ζητήματα που αφορούν την κοινωνία."
+        },
+        {
+                "word": "ΠΡΟΠΑΓΑΝΔΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και δημοκρατία",
+                "def": "Η συστηματική προσπάθεια επηρεασμού της σκέψης των ανθρώπων με μονόπλευρα, υπερβολικά ή παραπλανητικά μηνύματα."
+        },
+        {
+                "word": "ΔΗΜΟΣΙΟΓΡΑΦΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Η συλλογή, ο έλεγχος και η παρουσίαση ειδήσεων και πληροφοριών προς το κοινό με υπευθυνότητα."
+        },
+        {
+                "word": "ΔΕΟΝΤΟΛΟΓΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Το σύνολο των κανόνων που ορίζουν τη σωστή, έντιμη και υπεύθυνη συμπεριφορά σε ένα επάγγελμα ή πεδίο δράσης."
+        },
+        {
+                "word": "ΑΞΙΟΠΙΣΤΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και επιχειρηματολογία",
+                "def": "Η ιδιότητα μιας πηγής, πληροφορίας ή άποψης να φαίνεται έγκυρη, τεκμηριωμένη και άξια εμπιστοσύνης."
+        },
+        {
+                "word": "ΠΗΓΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και έρευνα",
+                "def": "Το πρόσωπο, το κείμενο, το μέσο ή ο τόπος από όπου αντλούμε πληροφορίες για ένα θέμα."
+        },
+        {
+                "word": "ΕΙΔΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Πληροφορία για πρόσφατο γεγονός που παρουσιάζεται στο κοινό επειδή θεωρείται σημαντική ή ενδιαφέρουσα."
+        },
+        {
+                "word": "ΑΝΑΜΕΤΑΔΟΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Η μετάδοση ξανά ή η προώθηση ενός μηνύματος, μιας είδησης ή μιας εκπομπής σε νέο κοινό."
+        },
+        {
+                "word": "ΡΕΠΟΡΤΑΖ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "ΜΜΕ",
+                "def": "Δημοσιογραφική έρευνα και παρουσίαση ενός γεγονότος, συνήθως με στοιχεία, μαρτυρίες και επιτόπια παρατήρηση."
+        },
+        {
+                "word": "ΜΕΣΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "ΜΜΕ",
+                "def": "Ο τρόπος ή το εργαλείο με το οποίο μεταδίδεται ένα μήνυμα, όπως η τηλεόραση, το ραδιόφωνο ή το διαδίκτυο."
+        },
+        {
+                "word": "ΔΙΑΦΗΜΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και κατανάλωση",
+                "def": "Μήνυμα που προβάλλει προϊόν, υπηρεσία ή ιδέα, με σκοπό να πείσει το κοινό να την επιλέξει ή να την υποστηρίξει."
+        },
+        {
+                "word": "ΥΠΕΡΠΡΟΒΟΛΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ",
+                "def": "Η υπερβολική προβολή ενός προσώπου, γεγονότος ή θέματος, συχνά σε βάρος της ουσιαστικής ενημέρωσης."
+        },
+        {
+                "word": "ΕΝΤΥΠΩΣΙΑΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "ΜΜΕ",
+                "def": "Η προσπάθεια να προκληθεί έντονη εντύπωση στο κοινό, ακόμη και όταν η ουσία του μηνύματος είναι περιορισμένη."
+        },
+        {
+                "word": "ΠΑΡΑΠΟΜΠΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Έρευνα και λόγος",
+                "def": "Η αναφορά σε πηγή, κείμενο ή στοιχείο από όπου προέρχεται μια πληροφορία ή ένα επιχείρημα."
+        },
+        {
+                "word": "ΠΕΡΙΕΧΟΜΕΝΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "ΜΜΕ και ψηφιακός κόσμος",
+                "def": "Το σύνολο όσων περιλαμβάνει ένα κείμενο, ένα μήνυμα, μια ιστοσελίδα ή μια ψηφιακή δημοσίευση."
+        },
+        {
+                "word": "ΔΙΑΔΙΚΤΥΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Το παγκόσμιο δίκτυο που επιτρέπει την επικοινωνία, την αναζήτηση πληροφοριών και την πρόσβαση σε ψηφιακές υπηρεσίες."
+        },
+        {
+                "word": "ΑΛΓΟΡΙΘΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Σειρά οδηγιών που ακολουθεί ένα ψηφιακό σύστημα για να λύσει ένα πρόβλημα ή να επιλέξει τι θα εμφανίσει."
+        },
+        {
+                "word": "ΠΛΑΤΦΟΡΜΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Ψηφιακό περιβάλλον όπου οι χρήστες επικοινωνούν, δημιουργούν, αγοράζουν, μαθαίνουν ή μοιράζονται περιεχόμενο."
+        },
+        {
+                "word": "ΑΣΦΑΛΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Η προστασία ανθρώπων, δεδομένων ή συστημάτων από κινδύνους, παραβιάσεις, απάτες ή βλαπτικές ενέργειες."
+        },
+        {
+                "word": "ΔΕΔΟΜΕΝΑ",
+                "pos": "Ουσιαστικό, ουδέτερο πληθυντικό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Πληροφορίες που συλλέγονται, αποθηκεύονται και επεξεργάζονται από ανθρώπους, οργανισμούς ή ψηφιακά συστήματα."
+        },
+        {
+                "word": "ΑΝΩΝΥΜΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Η κατάσταση κατά την οποία δεν αποκαλύπτεται η ταυτότητα ενός ατόμου, ιδιαίτερα σε δημόσια ή ψηφιακή επικοινωνία."
+        },
+        {
+                "word": "ΕΘΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ψηφιακός κόσμος και υγεία",
+                "def": "Η έντονη εξάρτηση από μια συνήθεια ή δραστηριότητα, που δυσκολεύει το άτομο να τη σταματήσει ακόμη κι όταν το βλάπτει."
+        },
+        {
+                "word": "ΕΞΑΡΤΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και ψηφιακός κόσμος",
+                "def": "Η κατάσταση κατά την οποία κάποιος νιώθει ότι δεν μπορεί να λειτουργήσει χωρίς ένα πρόσωπο, αντικείμενο ή συνήθεια."
+        },
+        {
+                "word": "ΔΙΑΔΡΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Η αμοιβαία επικοινωνία ή ανταπόκριση ανάμεσα σε χρήστες, μέσα ή ψηφιακά συστήματα."
+        },
+        {
+                "word": "ΑΥΤΟΜΑΤΟΠΟΙΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Τεχνολογία",
+                "def": "Η εκτέλεση εργασιών από μηχανές ή ψηφιακά συστήματα με περιορισμένη ανθρώπινη παρέμβαση."
+        },
+        {
+                "word": "ΣΥΝΔΕΣΙΜΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Η δυνατότητα συσκευών, ανθρώπων ή υπηρεσιών να συνδέονται μεταξύ τους και να ανταλλάσσουν πληροφορίες."
+        },
+        {
+                "word": "ΚΥΒΕΡΝΟΑΣΦΑΛΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Η προστασία ψηφιακών συστημάτων, δικτύων και δεδομένων από επιθέσεις, κλοπές ή κακόβουλη χρήση."
+        },
+        {
+                "word": "ΚΩΔΙΚΑΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Ψηφιακός κόσμος και γλώσσα",
+                "def": "Σύνολο κανόνων, συμβόλων ή εντολών που χρησιμοποιούνται για επικοινωνία, προγραμματισμό ή αποκρυπτογράφηση μηνυμάτων."
+        },
+        {
+                "word": "ΕΦΑΡΜΟΓΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος",
+                "def": "Πρόγραμμα ή εργαλείο, συνήθως σε κινητό ή υπολογιστή, που επιτρέπει στον χρήστη να εκτελεί συγκεκριμένες λειτουργίες."
+        },
+        {
+                "word": "ΑΝΑΡΤΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος και ΜΜΕ",
+                "def": "Δημοσίευση κειμένου, εικόνας, ήχου ή βίντεο σε ψηφιακή πλατφόρμα ή κοινωνικό δίκτυο."
+        },
+        {
+                "word": "ΠΡΟΦΙΛ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Ψηφιακή ταυτότητα",
+                "def": "Η δημόσια ή προσωπική ψηφιακή εικόνα ενός χρήστη, με στοιχεία, φωτογραφίες, αναρτήσεις και επιλογές."
+        },
+        {
+                "word": "ΑΠΟΡΡΗΤΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Ψηφιακά δικαιώματα",
+                "def": "Η προστασία πληροφοριών που δεν πρέπει να αποκαλύπτονται χωρίς άδεια, όπως προσωπικά δεδομένα ή ιδιωτική επικοινωνία."
+        },
+        {
+                "word": "ΠΡΟΣΒΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ψηφιακός κόσμος και δικαιώματα",
+                "def": "Η δυνατότητα να χρησιμοποιεί κάποιος έναν χώρο, μια υπηρεσία, μια πληροφορία ή ένα ψηφιακό εργαλείο."
+        },
+        {
+                "word": "ΕΓΚΥΡΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και επιχειρηματολογία",
+                "def": "Η ιδιότητα μιας πληροφορίας ή άποψης να είναι σωστή, ελεγμένη και στηριγμένη σε αξιόπιστα στοιχεία."
+        },
+        {
+                "word": "ΑΙΤΙΟΛΟΓΩ",
+                "pos": "Ρήμα",
+                "theme": "Επιχειρηματολογία",
+                "def": "Εξηγώ τους λόγους για τους οποίους υποστηρίζω μια άποψη, παίρνω μια απόφαση ή αξιολογώ μια πράξη."
+        },
+        {
+                "word": "ΤΕΚΜΗΡΙΩΝΩ",
+                "pos": "Ρήμα",
+                "theme": "Επιχειρηματολογία",
+                "def": "Στηρίζω μια άποψη με στοιχεία, παραδείγματα, πηγές ή λογικά επιχειρήματα ώστε να γίνει πειστική."
+        },
+        {
+                "word": "ΣΥΜΠΕΡΑΙΝΩ",
+                "pos": "Ρήμα",
+                "theme": "Επιχειρηματολογία",
+                "def": "Καταλήγω σε σκέψη ή απόφαση με βάση στοιχεία, παρατηρήσεις ή προηγούμενους συλλογισμούς."
+        },
+        {
+                "word": "ΑΝΑΛΥΩ",
+                "pos": "Ρήμα",
+                "theme": "Γλώσσα και σκέψη",
+                "def": "Εξετάζω ένα θέμα χωρίζοντάς το στα μέρη του, ώστε να κατανοήσω βαθύτερα τη σημασία και τη λειτουργία του."
+        },
+        {
+                "word": "ΣΥΝΘΕΤΩ",
+                "pos": "Ρήμα",
+                "theme": "Γλώσσα και σκέψη",
+                "def": "Ενώνω επιμέρους στοιχεία, ιδέες ή πληροφορίες για να δημιουργήσω ένα ολοκληρωμένο κείμενο, σχέδιο ή συμπέρασμα."
+        },
+        {
+                "word": "ΠΕΙΘΩ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Επιχειρηματολογία",
+                "def": "Η δύναμη του λόγου να κάνει κάποιον να αποδεχτεί μια άποψη, μια πρόταση ή έναν τρόπο δράσης."
+        },
+        {
+                "word": "ΑΝΤΙΡΡΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Επιχειρηματολογία",
+                "def": "Η διαφωνία που εκφράζεται απέναντι σε μια άποψη, απόφαση ή πρόταση, συνήθως με αιτιολόγηση."
+        },
+        {
+                "word": "ΘΕΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Επιχειρηματολογία",
+                "def": "Η βασική άποψη που υποστηρίζει κάποιος για ένα θέμα και την οποία προσπαθεί να εξηγήσει ή να αποδείξει."
+        },
+        {
+                "word": "ΑΝΤΙΘΕΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και λόγος",
+                "def": "Η αντίθετη σχέση ανάμεσα σε δύο ιδέες, καταστάσεις ή λέξεις, που συχνά τονίζει τη διαφορά τους."
+        },
+        {
+                "word": "ΣΥΝΕΚΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κείμενο και λόγος",
+                "def": "Αυτός που συνδέει τα μέρη ενός κειμένου ή μιας ομάδας, ώστε να υπάρχει λογική σχέση και ενότητα."
+        },
+        {
+                "word": "ΣΑΦΗΝΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και λόγος",
+                "def": "Η ιδιότητα ενός λόγου να είναι καθαρός, κατανοητός και χωρίς ασάφειες ή περιττές δυσκολίες."
+        },
+        {
+                "word": "ΑΚΡΙΒΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και πληροφορία",
+                "def": "Η σωστή και προσεκτική απόδοση μιας πληροφορίας, χωρίς λάθη, υπερβολές ή παραλείψεις."
+        },
+        {
+                "word": "ΓΕΝΙΚΕΥΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και σκέψη",
+                "def": "Το συμπέρασμα που παρουσιάζεται ως γενικός κανόνας, αν και μπορεί να βασίζεται σε περιορισμένα παραδείγματα."
+        },
+        {
+                "word": "ΑΝΤΙΠΑΡΑΒΟΛΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και λόγος",
+                "def": "Η σύγκριση δύο στοιχείων τοποθετημένων το ένα απέναντι στο άλλο, ώστε να φανούν ομοιότητες και διαφορές."
+        },
+        {
+                "word": "ΠΑΡΑΔΕΙΓΜΑ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Επιχειρηματολογία",
+                "def": "Συγκεκριμένη περίπτωση που χρησιμοποιείται για να γίνει μια ιδέα πιο κατανοητή ή ένα επιχείρημα πιο πειστικό."
+        },
+        {
+                "word": "ΣΥΝΑΦΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κείμενο και λόγος",
+                "def": "Η λογική σχέση ενός στοιχείου με το θέμα που εξετάζεται, ώστε να μην φαίνεται άσχετο ή τυχαίο."
+        },
+        {
+                "word": "ΕΠΕΞΗΓΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κείμενο και λόγος",
+                "def": "Η πρόσθετη διευκρίνιση που κάνει μια έννοια, μια πρόταση ή ένα επιχείρημα πιο κατανοητό."
+        },
+        {
+                "word": "ΔΟΜΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κείμενο και λόγος",
+                "def": "Ο τρόπος με τον οποίο οργανώνονται τα μέρη ενός κειμένου, μιας ιδέας ή ενός συστήματος."
+        },
+        {
+                "word": "ΣΥΝΔΕΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κείμενο και λόγος",
+                "def": "Αυτός που λειτουργεί ως σύνδεσμος ανάμεσα σε λέξεις, προτάσεις, παραγράφους ή ιδέες."
+        },
+        {
+                "word": "ΜΕΤΑΒΑΤΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κείμενο και λόγος",
+                "def": "Αυτός που βοηθά τη μετάβαση από μια ιδέα, ενότητα ή κατάσταση σε μια άλλη με ομαλό τρόπο."
+        },
+        {
+                "word": "ΑΝΤΙΚΕΙΜΕΝΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "ΜΜΕ και επιχειρηματολογία",
+                "def": "Αυτός που προσπαθεί να παρουσιάσει τα πράγματα δίκαια και ουδέτερα, χωρίς προσωπικές προτιμήσεις ή προκαταλήψεις."
+        },
+        {
+                "word": "ΥΠΟΚΕΙΜΕΝΙΚΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Γλώσσα και σκέψη",
+                "def": "Αυτός που επηρεάζεται από τα προσωπικά συναισθήματα, τις εμπειρίες ή τις προτιμήσεις ενός ανθρώπου."
+        },
+        {
+                "word": "ΕΠΙΦΥΛΑΞΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κριτική σκέψη",
+                "def": "Η προσεκτική στάση απέναντι σε μια πληροφορία ή πρόταση, όταν χρειάζεται περισσότερος έλεγχος πριν την αποδεχτούμε."
+        },
+        {
+                "word": "ΑΜΦΙΣΒΗΤΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κριτική σκέψη",
+                "def": "Η άρνηση να δεχτεί κάποιος κάτι ως δεδομένο, ζητώντας στοιχεία, εξηγήσεις ή διαφορετική οπτική."
+        },
+        {
+                "word": "ΠΛΕΙΟΨΗΦΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Το μεγαλύτερο μέρος ενός συνόλου ανθρώπων που στηρίζει μια απόφαση, άποψη ή επιλογή."
+        },
+        {
+                "word": "ΜΕΙΟΨΗΦΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Το μικρότερο μέρος ενός συνόλου ανθρώπων που έχει διαφορετική άποψη ή επιλογή από τους περισσότερους."
+        },
+        {
+                "word": "ΕΚΠΡΟΣΩΠΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία",
+                "def": "Η παρουσία ή δράση ενός προσώπου που μιλά και ενεργεί εκ μέρους μιας ομάδας, κοινότητας ή θεσμού."
+        },
+        {
+                "word": "ΔΙΕΚΔΙΚΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και δικαιώματα",
+                "def": "Η ενεργή προσπάθεια να αποκτήσει ή να προστατεύσει κάποιος κάτι που θεωρεί δίκαιο ή αναγκαίο."
+        },
+        {
+                "word": "ΧΕΙΡΑΓΩΓΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "ΜΜΕ και κοινωνία",
+                "def": "Η κρυφή ή άδικη προσπάθεια να ελεγχθεί η σκέψη και η συμπεριφορά ανθρώπων προς συγκεκριμένη κατεύθυνση."
+        },
+        {
+                "word": "ΑΠΟΔΟΧΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ανθρώπινες σχέσεις",
+                "def": "Η θετική στάση απέναντι σε έναν άνθρωπο, μια άποψη ή μια κατάσταση, χωρίς απόρριψη ή απαξίωση."
+        },
+        {
+                "word": "ΣΥΜΒΙΒΑΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνία και δημοκρατία",
+                "def": "Η συμφωνία που επιτυγχάνεται όταν διαφορετικές πλευρές υποχωρούν σε ορισμένα σημεία για να βρεθεί κοινή λύση."
+        },
+        {
+                "word": "ΔΙΑΜΕΣΟΛΑΒΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η παρέμβαση τρίτου προσώπου ή φορέα για να βοηθήσει δύο πλευρές να λύσουν μια διαφωνία ειρηνικά."
+        },
+        {
+                "word": "ΣΥΓΚΡΟΥΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η έντονη αντίθεση ανάμεσα σε ανθρώπους, ομάδες ή ιδέες, που μπορεί να εκφραστεί με λόγο ή πράξη."
+        },
+        {
+                "word": "ΕΙΡΗΝΕΥΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και δημοκρατία",
+                "def": "Η προσπάθεια να σταματήσει μια σύγκρουση και να αποκατασταθεί η ηρεμία και η συνεργασία."
+        },
+        {
+                "word": "ΕΚΦΟΒΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνία και σχολείο",
+                "def": "Η επαναλαμβανόμενη επιθετική συμπεριφορά που έχει σκοπό να φοβίσει, να ταπεινώσει ή να απομονώσει κάποιον."
+        },
+        {
+                "word": "ΠΑΡΕΝΟΧΛΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και δικαιώματα",
+                "def": "Η ενοχλητική, πιεστική ή προσβλητική συμπεριφορά που παραβιάζει τα όρια και την αξιοπρέπεια ενός ανθρώπου."
+        },
+        {
+                "word": "ΕΝΔΥΝΑΜΩΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η διαδικασία με την οποία ένα άτομο ή μια ομάδα αποκτά μεγαλύτερη αυτοπεποίθηση, γνώση και δυνατότητα δράσης."
+        },
+        {
+                "word": "ΕΠΙΚΟΙΝΩΝΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και κοινωνία",
+                "def": "Η ανταλλαγή μηνυμάτων, σκέψεων και συναισθημάτων ανάμεσα σε ανθρώπους με λόγο, εικόνα, ήχο ή κίνηση."
+        },
+        {
+                "word": "ΣΥΝΕΡΓΑΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και σχολείο",
+                "def": "Η κοινή προσπάθεια ανθρώπων που μοιράζονται ευθύνες, ιδέες και εργασίες για να πετύχουν έναν στόχο."
+        },
+        {
+                "word": "ΑΝΤΑΓΩΝΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνία",
+                "def": "Η προσπάθεια δύο ή περισσότερων πλευρών να υπερισχύσουν, που μπορεί να είναι δημιουργική αλλά και πιεστική."
+        },
+        {
+                "word": "ΠΡΟΟΔΟΣ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και τεχνολογία",
+                "def": "Η βελτίωση της γνώσης, των συνθηκών ζωής ή των θεσμών, όταν οδηγεί σε πιο δίκαιη και δημιουργική κοινωνία."
+        },
+        {
+                "word": "ΟΠΙΣΘΟΔΡΟΜΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η επιστροφή σε παλιότερες, λιγότερο προοδευτικές αντιλήψεις ή πρακτικές που εμποδίζουν την εξέλιξη."
+        },
+        {
+                "word": "ΕΚΣΥΓΧΡΟΝΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κοινωνία και τεχνολογία",
+                "def": "Η προσαρμογή θεσμών, υπηρεσιών ή τρόπων ζωής στις ανάγκες και τις δυνατότητες της σύγχρονης εποχής."
+        },
+        {
+                "word": "ΜΕΤΑΡΡΥΘΜΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και πολιτεία",
+                "def": "Η οργανωμένη αλλαγή σε έναν θεσμό ή σύστημα με σκοπό τη βελτίωση της λειτουργίας του."
+        },
+        {
+                "word": "ΑΝΙΣΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία",
+                "def": "Η άδικη διαφορά στις ευκαιρίες, στα δικαιώματα ή στους πόρους που έχουν διαφορετικοί άνθρωποι ή ομάδες."
+        },
+        {
+                "word": "ΠΡΟΝΟΜΙΟ",
+                "pos": "Ουσιαστικό, ουδέτερο",
+                "theme": "Κοινωνία",
+                "def": "Ιδιαίτερο δικαίωμα ή πλεονέκτημα που διαθέτει κάποιος, συχνά χωρίς να το έχουν όλοι οι άλλοι."
+        },
+        {
+                "word": "ΕΥΑΛΩΤΟΣ",
+                "pos": "Επίθετο",
+                "theme": "Κοινωνία",
+                "def": "Αυτός που μπορεί εύκολα να πληγεί, να αδικηθεί ή να επηρεαστεί από δυσκολίες, κινδύνους ή κοινωνικές πιέσεις."
+        },
+        {
+                "word": "ΑΝΘΕΚΤΙΚΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και περιβάλλον",
+                "def": "Η ικανότητα ενός ανθρώπου, μιας κοινότητας ή ενός συστήματος να αντέχει δυσκολίες και να επανέρχεται μετά από κρίσεις."
+        },
+        {
+                "word": "ΚΡΙΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και περιβάλλον",
+                "def": "Μια δύσκολη και κρίσιμη κατάσταση που απαιτεί αποφάσεις, προσαρμογή και υπεύθυνη αντιμετώπιση."
+        },
+        {
+                "word": "ΜΕΤΑΒΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και τεχνολογία",
+                "def": "Η διαδικασία αλλαγής από μια κατάσταση, εποχή ή μορφή οργάνωσης σε μια άλλη."
+        },
+        {
+                "word": "ΠΡΟΣΑΡΜΟΓΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και περιβάλλον",
+                "def": "Η ικανότητα να αλλάζει κανείς στάση, συμπεριφορά ή τρόπο λειτουργίας ανάλογα με νέες συνθήκες."
+        },
+        {
+                "word": "ΚΑΛΛΙΕΡΓΕΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Παιδεία και πολιτισμός",
+                "def": "Η ανάπτυξη γνώσεων, αξιών, δεξιοτήτων και αισθητικής μέσα από την παιδεία, την εμπειρία και την προσπάθεια."
+        },
+        {
+                "word": "ΣΥΝΕΙΔΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Ηθικές αξίες",
+                "def": "Η εσωτερική ικανότητα να κρίνουμε τις πράξεις μας, να ξεχωρίζουμε το σωστό από το λάθος και να αναλαμβάνουμε ευθύνη."
+        },
+        {
+                "word": "ΔΕΞΙΟΤΗΤΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Εκπαίδευση",
+                "def": "Η ικανότητα να εκτελεί κανείς κάτι αποτελεσματικά, επειδή έχει εξασκηθεί ή έχει αποκτήσει σχετική εμπειρία."
+        },
+        {
+                "word": "ΓΡΑΜΜΑΤΙΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Εκπαίδευση και ΜΜΕ",
+                "def": "Η ικανότητα να κατανοούμε, να αξιολογούμε και να χρησιμοποιούμε κείμενα, πληροφορίες και μέσα επικοινωνίας."
+        },
+        {
+                "word": "ΔΙΕΡΕΥΝΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Έρευνα και μάθηση",
+                "def": "Η προσεκτική αναζήτηση και εξέταση πληροφοριών για να κατανοηθεί καλύτερα ένα ζήτημα ή πρόβλημα."
+        },
+        {
+                "word": "ΑΝΑΖΗΤΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Έρευνα και ψηφιακός κόσμος",
+                "def": "Η προσπάθεια να βρει κάποιος πληροφορίες, λύσεις ή απαντήσεις μέσα από πηγές, ερωτήσεις ή ψηφιακά εργαλεία."
+        },
+        {
+                "word": "ΕΠΙΛΟΓΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και προσωπική ευθύνη",
+                "def": "Η απόφαση ανάμεσα σε δύο ή περισσότερες δυνατότητες, με βάση ανάγκες, αξίες, πληροφορίες ή στόχους."
+        },
+        {
+                "word": "ΑΠΟΦΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Δημοκρατία και ευθύνη",
+                "def": "Το αποτέλεσμα σκέψης ή συζήτησης που οδηγεί σε συγκεκριμένη επιλογή και συχνά επηρεάζει άλλους ανθρώπους."
+        },
+        {
+                "word": "ΣΤΑΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και κοινωνία",
+                "def": "Ο τρόπος με τον οποίο κάποιος αντιμετωπίζει ένα ζήτημα, εκφράζοντας αξίες, πεποιθήσεις και συναισθήματα."
+        },
+        {
+                "word": "ΝΟΟΤΡΟΠΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Κοινωνία και πολιτισμός",
+                "def": "Ο σταθερός τρόπος σκέψης που επηρεάζει τη συμπεριφορά ενός ανθρώπου, μιας ομάδας ή μιας κοινωνίας."
+        },
+        {
+                "word": "ΑΝΤΙΛΗΨΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και σκέψη",
+                "def": "Ο τρόπος με τον οποίο κατανοεί ή ερμηνεύει κάποιος ένα γεγονός, μια ιδέα ή μια κοινωνική κατάσταση."
+        },
+        {
+                "word": "ΠΕΠΟΙΘΗΣΗ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Γλώσσα και κοινωνία",
+                "def": "Σταθερή άποψη ή πίστη που επηρεάζει τον τρόπο με τον οποίο κάποιος σκέφτεται, μιλά και ενεργεί."
+        },
+        {
+                "word": "ΣΤΟΧΑΣΜΟΣ",
+                "pos": "Ουσιαστικό, αρσενικό",
+                "theme": "Κριτική σκέψη",
+                "def": "Η βαθιά σκέψη πάνω σε ένα ζήτημα, με σκοπό την κατανόηση, την αυτογνωσία ή τη διαμόρφωση άποψης."
+        },
+        {
+                "word": "ΑΥΤΟΓΝΩΣΙΑ",
+                "pos": "Ουσιαστικό, θηλυκό",
+                "theme": "Προσωπική ανάπτυξη",
+                "def": "Η γνώση που έχει κάποιος για τον εαυτό του, τις δυνατότητες, τις αδυναμίες, τις ανάγκες και τις αξίες του."
+        }
+];
+
+    const STORAGE_KEY = "ngrVocabEditorialCollageGym3Teams";
+    const ROUND_SECONDS = 30;
+    const MAX_TEAMS = 5;
+
+    let currentIndex = 0;
+    let teamCount = 1;
+    let currentTeamIndex = 0;
+    let teamScores = [0];
+    let revealedLetters = 0;
+    let timeLeft = ROUND_SECONDS;
+    let timerId = null;
+    let roundLocked = false;
+    let audioCtx = null;
+
+    const els = {};
+
+    function cacheElements() {
+        els.startScreen = document.getElementById("start-screen");
+        els.gameArea = document.getElementById("game-area");
+        els.endScreen = document.getElementById("end-screen");
+        els.wordPos = document.getElementById("word-pos");
+        els.wordTheme = document.getElementById("word-theme");
+        els.wordDef = document.getElementById("word-def");
+        els.wordHints = document.getElementById("word-hints");
+        els.feedback = document.getElementById("feedback-msg");
+        els.input = document.getElementById("user-input");
+        els.score = document.getElementById("score-text");
+        els.timerText = document.getElementById("timer-text");
+        els.timerRing = document.getElementById("timer-ring");
+        els.finalScore = document.getElementById("final-score");
+        els.finalScoreList = document.getElementById("final-score-list");
+        els.currentTeamLabel = document.getElementById("current-team-label");
+        els.teamScoreList = document.getElementById("team-score-list");
+    }
+
+    function normalizeString(str) {
+        return (str || "")
+            .normalize("NFD")
+            .replace(/[̀-ͯ]/g, "")
+            .replace(/ς/g, "σ")
+            .toUpperCase()
+            .trim();
+    }
+
+    function clampTeamCount(count) {
+        return Math.max(1, Math.min(MAX_TEAMS, Number(count) || 1));
+    }
+
+    function ensureTeamScores() {
+        teamCount = clampTeamCount(teamCount);
+        const nextScores = [];
+        for (let i = 0; i < teamCount; i++) {
+            nextScores.push(Number(teamScores[i]) || 0);
+        }
+        teamScores = nextScores;
+        if (currentTeamIndex >= teamCount) currentTeamIndex = 0;
+    }
+
+    function selectTeamCount(count) {
+        teamCount = clampTeamCount(count);
+        teamScores = Array(teamCount).fill(0);
+        currentTeamIndex = 0;
+        document.querySelectorAll(".team-option").forEach(btn => {
+            btn.classList.toggle("active", Number(btn.dataset.teamCount) === teamCount);
+        });
+        renderScoreboard();
+    }
+
+    function getCurrentTeamName() {
+        return "Ομάδα " + (currentTeamIndex + 1);
+    }
+
+    function renderScoreboard() {
+        if (!els.teamScoreList) return;
+        ensureTeamScores();
+        els.currentTeamLabel.innerText = getCurrentTeamName();
+        els.score.innerText = (teamScores[currentTeamIndex] || 0) + " πόντοι";
+        els.teamScoreList.innerHTML = teamScores.map((score, index) => {
+            const activeClass = index === currentTeamIndex ? " active" : "";
+            return `<div class="team-score-row${activeClass}"><span>Ομάδα ${index + 1}</span><strong>${score}</strong></div>`;
+        }).join("");
+    }
+
+    function addPointsToCurrentTeam(points) {
+        ensureTeamScores();
+        teamScores[currentTeamIndex] = Math.max(0, (teamScores[currentTeamIndex] || 0) + points);
+        renderScoreboard();
+    }
+
+    function advanceTeam() {
+        ensureTeamScores();
+        if (teamCount > 1) currentTeamIndex = (currentTeamIndex + 1) % teamCount;
+        renderScoreboard();
+    }
+
+    function ensureAudioContext() {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextClass) return null;
+        if (!audioCtx) audioCtx = new AudioContextClass();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+        return audioCtx;
+    }
+
+    function playTone(freq, duration, type = "sine", delay = 0, gainValue = 0.78) {
+        const ctx = ensureAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const compressor = ctx.createDynamicsCompressor();
+        osc.type = type;
+        osc.frequency.value = freq;
+        compressor.threshold.setValueAtTime(-18, ctx.currentTime);
+        compressor.knee.setValueAtTime(24, ctx.currentTime);
+        compressor.ratio.setValueAtTime(10, ctx.currentTime);
+        compressor.attack.setValueAtTime(0.002, ctx.currentTime);
+        compressor.release.setValueAtTime(0.16, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(compressor);
+        compressor.connect(ctx.destination);
+        const start = ctx.currentTime + delay;
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.exponentialRampToValueAtTime(gainValue, start + 0.018);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+        osc.start(start);
+        osc.stop(start + duration + 0.04);
+    }
+
+    function playSuccessSound() {
+        ensureAudioContext();
+        playTone(523.25, 0.20, "sine", 0, 0.82);
+        playTone(659.25, 0.20, "triangle", 0.10, 0.86);
+        playTone(783.99, 0.30, "triangle", 0.22, 0.88);
+        playTone(1046.50, 0.16, "sine", 0.40, 0.72);
+    }
+
+    function playFailureSound() {
+        ensureAudioContext();
+        playTone(220, 0.34, "sawtooth", 0, 0.86);
+        playTone(164.81, 0.40, "square", 0.18, 0.82);
+        playTone(123.47, 0.48, "sawtooth", 0.36, 0.84);
+    }
+
+    function updateTimerUI() {
+        const safeTime = Math.max(0, timeLeft);
+        els.timerText.innerText = safeTime;
+        const percent = Math.max(0, Math.min(100, (safeTime / ROUND_SECONDS) * 100));
+        document.documentElement.style.setProperty("--timer-percent", percent + "%");
+    }
+
+    function startTimer(reset = true) {
+        clearInterval(timerId);
+        if (reset) timeLeft = ROUND_SECONDS;
+        updateTimerUI();
+        timerId = setInterval(() => {
+            if (roundLocked) return;
+            timeLeft -= 1;
+            updateTimerUI();
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                handleTimeUp();
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerId);
+        timerId = null;
+    }
+
+    function setControlsEnabled(enabled) {
+        els.input.disabled = !enabled;
+        document.querySelectorAll("#game-area button").forEach(btn => btn.disabled = !enabled);
+    }
+
+    function startGame() {
+        ensureAudioContext();
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            try {
+                const parsed = JSON.parse(savedData);
+                if (confirm("Βρέθηκε αποθηκευμένη συνεδρία. Θέλετε να συνεχίσετε;")) {
+                    currentIndex = Number(parsed.currentIndex) || 0;
+                    teamCount = clampTeamCount(parsed.teamCount || 1);
+                    teamScores = Array.isArray(parsed.teamScores) ? parsed.teamScores.map(x => Number(x) || 0) : Array(teamCount).fill(0);
+                    currentTeamIndex = Number(parsed.currentTeamIndex) || 0;
+                    timeLeft = Number(parsed.timeLeft) || ROUND_SECONDS;
+                } else {
+                    localStorage.removeItem(STORAGE_KEY);
+                    currentIndex = 0;
+                    teamScores = Array(teamCount).fill(0);
+                    currentTeamIndex = 0;
+                    timeLeft = ROUND_SECONDS;
+                }
+            } catch (e) {
+                localStorage.removeItem(STORAGE_KEY);
+            }
+        }
+        ensureTeamScores();
+        document.querySelectorAll(".team-option").forEach(btn => {
+            btn.classList.toggle("active", Number(btn.dataset.teamCount) === teamCount);
+        });
+        els.startScreen.classList.add("hidden");
+        els.endScreen.classList.add("hidden");
+        els.gameArea.classList.remove("hidden");
+        renderScoreboard();
+        loadWord({ resetTimer: timeLeft === ROUND_SECONDS });
+    }
+
+    function loadWord(options = { resetTimer: true }) {
+        if (currentIndex >= vocabulary.length) {
+            showEndScreen();
+            return;
+        }
+
+        const currentItem = vocabulary[currentIndex];
+        roundLocked = false;
+        revealedLetters = 0;
+        setControlsEnabled(true);
+
+        els.wordPos.innerText = currentItem.pos;
+        els.wordTheme.innerText = currentItem.theme;
+        els.wordDef.innerText = currentItem.def;
+        els.input.value = "";
+        els.feedback.innerText = "";
+        els.feedback.className = "feedback";
+        renderScoreboard();
+
+        updateHintDisplay();
+        startTimer(options.resetTimer !== false);
+        setTimeout(() => els.input.focus(), 60);
+    }
+
+    function updateHintDisplay() {
+        if (currentIndex >= vocabulary.length) return;
+        const word = vocabulary[currentIndex].word;
+        let displayStr = "";
+        for (let i = 0; i < word.length; i++) {
+            const char = word[i];
+            if (char === "-" || char === " ") {
+                displayStr += char + " ";
+            } else if (i < revealedLetters) {
+                displayStr += char + " ";
+            } else {
+                displayStr += "_ ";
+            }
+        }
+        els.wordHints.innerText = displayStr.trim();
+    }
+
+    function revealHint() {
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        const wordLength = vocabulary[currentIndex].word.replace(/[ -]/g, "").length;
+        if (revealedLetters < wordLength - 1) {
+            revealedLetters += 1;
+            addPointsToCurrentTeam(-1);
+            updateHintDisplay();
+        }
+        els.input.focus();
+    }
+
+    function moveToNextWord(resetTimer) {
+        if (currentIndex < vocabulary.length) advanceTeam();
+        loadWord({ resetTimer: resetTimer });
+    }
+
+    function resolveCorrect(message) {
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        const scoringTeam = getCurrentTeamName();
+        roundLocked = true;
+        stopTimer();
+        setControlsEnabled(false);
+        playSuccessSound();
+        addPointsToCurrentTeam(10);
+        els.feedback.innerText = scoringTeam + ": " + message;
+        els.feedback.className = "feedback correct-text";
+        currentIndex += 1;
+        setTimeout(() => moveToNextWord(true), 1250);
+    }
+
+    function checkAnswer() {
+        ensureAudioContext();
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        const userInput = els.input.value;
+        const correctWord = vocabulary[currentIndex].word;
+        if (normalizeString(userInput) === normalizeString(correctWord)) {
+            resolveCorrect("Σωστό! +10 πόντοι.");
+        } else {
+            els.feedback.innerText = "Όχι ακόμα. Δοκίμασε ξανά ή ζήτησε βοήθεια.";
+            els.feedback.className = "feedback wrong-text";
+            els.input.value = "";
+            els.input.focus();
+        }
+    }
+
+    function teacherOverride() {
+        ensureAudioContext();
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        els.input.value = vocabulary[currentIndex].word;
+        resolveCorrect("Το βρήκε! +10 πόντοι.");
+    }
+
+    function passWord() {
+        ensureAudioContext();
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        const remaining = Math.max(1, timeLeft);
+        currentIndex += 1;
+        timeLeft = remaining;
+        // Το πάσο αλλάζει μόνο λέξη. Η ενεργή ομάδα παραμένει ίδια και ο χρόνος συνεχίζει.
+        loadWord({ resetTimer: false });
+    }
+
+    function handleTimeUp() {
+        if (roundLocked || currentIndex >= vocabulary.length) return;
+        const teamName = getCurrentTeamName();
+        roundLocked = true;
+        setControlsEnabled(false);
+        playFailureSound();
+        const correctWord = vocabulary[currentIndex].word;
+        els.input.value = correctWord;
+        els.feedback.innerText = teamName + ": ο χρόνος έληξε. Η λέξη ήταν: " + correctWord;
+        els.feedback.className = "feedback wrong-text";
+        currentIndex += 1;
+        setTimeout(() => moveToNextWord(true), 2200);
+    }
+
+    function saveGame() {
+        const gameData = {
+            currentIndex: currentIndex,
+            teamCount: teamCount,
+            currentTeamIndex: currentTeamIndex,
+            teamScores: teamScores,
+            timeLeft: timeLeft,
+            savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(gameData));
+        alert("Η πρόοδος της συνεδρίας αποθηκεύτηκε επιτυχώς.");
+    }
+
+    function showEndScreen() {
+        stopTimer();
+        els.gameArea.classList.add("hidden");
+        els.startScreen.classList.add("hidden");
+        els.endScreen.classList.remove("hidden");
+        ensureTeamScores();
+        const topScore = Math.max(...teamScores);
+        const winners = teamScores
+            .map((score, index) => ({ score, name: "Ομάδα " + (index + 1) }))
+            .filter(team => team.score === topScore)
+            .map(team => team.name)
+            .join(", ");
+        els.finalScore.innerText = teamCount === 1 ? "Τελικό σκορ: " + teamScores[0] : "Νίκη: " + winners;
+        els.finalScoreList.innerHTML = teamScores.map((score, index) => {
+            const activeClass = score === topScore ? " active" : "";
+            return `<div class="team-score-row${activeClass}"><span>Ομάδα ${index + 1}</span><strong>${score}</strong></div>`;
+        }).join("");
+        localStorage.removeItem(STORAGE_KEY);
+    }
+
+    function resetGame() {
+        stopTimer();
+        currentIndex = 0;
+        teamScores = Array(teamCount).fill(0);
+        currentTeamIndex = 0;
+        timeLeft = ROUND_SECONDS;
+        localStorage.removeItem(STORAGE_KEY);
+        els.endScreen.classList.add("hidden");
+        els.gameArea.classList.remove("hidden");
+        renderScoreboard();
+        loadWord({ resetTimer: true });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        cacheElements();
+        selectTeamCount(1);
+        els.input.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkAnswer();
+            }
+        });
+    });
+</script>
+</body>
+</html>
